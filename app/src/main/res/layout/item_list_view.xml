@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bottlesImage"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/dateText"
+        android:layout_marginTop="1dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/tetrabriksImage"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/bottlesImage"
+
+        android:layout_marginTop="0dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/paperboardImage"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/tetrabriksImage"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/glassImage"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/paperboardImage"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/cansImage"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/glassImage"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/bottlesText"
+        android:layout_width="195dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/dateText"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/bottlesImage"
+        android:text="Bottles"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/bottlesImage" />
+
+    <TextView
+        android:id="@+id/tetrabriksText"
+        android:layout_width="195dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/bottlesImage"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/bottlesImage"
+        android:text="Tetrabriks"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/bottlesImage" />
+
+    <TextView
+        android:id="@+id/paperboardText"
+        android:layout_width="195dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/tetrabriksImage"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/bottlesImage"
+        android:text="Paperboard"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/bottlesImage" />
+
+    <TextView
+        android:id="@+id/glassText"
+        android:layout_width="195dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/paperboardImage"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/bottlesImage"
+        android:text="Glass"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/bottlesImage" />
+
+    <TextView
+        android:id="@+id/cansText"
+        android:layout_width="195dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/glassImage"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/bottlesImage"
+        android:text="Cans"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/bottlesImage" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="82dp"
+        android:layout_marginRight="82dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RecyclingActivity">
+
+    <Button
+        android:id="@+id/loadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="139dp"
+        android:layout_marginLeft="139dp"
+        android:layout_marginEnd="157dp"
+        android:layout_marginRight="157dp"
+        android:layout_marginBottom="209dp"
+        android:text="cargar" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Botellas:"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/bottlesText"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/tetrabriksText"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@+id/bottlesText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/glassText"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tetrabriksText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/paperboardText"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@+id/glassText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/cansText"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@+id/paperboardText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/bottlesText"
+        android:layout_alignParentStart="true"
+        android:text="Tetrabriks:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_alignTop="@+id/glassText"
+        android:layout_alignParentStart="true"
+        android:text="Vidrio:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/glassText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="0dp"
+        android:text="Cartón:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_alignTop="@+id/cansText"
+        android:layout_alignParentStart="true"
+        android:text="Latas:"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/loadButton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="153dp"
+        android:text="Enviar" />
+
+    <Button
+        android:id="@+id/recyclingListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/loadButton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-21dp"
+        android:layout_marginBottom="84dp"
+        android:text="Ver Reciclados" />
+
+    <Button
+        android:id="@+id/totalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/loadButton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-3dp"
+        android:layout_marginBottom="25dp"
+        android:text="Ver Total" />
+
+</RelativeLayout>
