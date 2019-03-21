@@ -74,7 +74,7 @@ public class User {
         userJSON.put("lastname", lastname);
         userJSON.put("username", username);
         userJSON.put("address", address);
-        userJSON.put("email", email);
+        userJSON.put("mail", email);
         } catch (JSONException e) {
             Log.e("Error:", e.getMessage());
         }

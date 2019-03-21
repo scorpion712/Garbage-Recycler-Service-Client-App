@@ -39,8 +39,14 @@ public class RecyclingListActivity extends AppCompatActivity {
         // Get the username
         Bundle extras = getIntent().getExtras();
         username = (String) extras.get(LoginActivity.USERNAME);
+
         // Consume the Web Service GET username recycling list
         new RecyclingListWS().execute();
+
+        /**
+         * We must load the user recycling saved by the user on internal storage. So we
+         * could show the locally and whats its on the server side.
+         */
 
         // Create a the view
         ListView recyclingListView = (ListView) findViewById(R.id.listView);

@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String USERNAME = "usernames"; // Used to save the shared preferences and to pass the username to another activity
     // This are use as messages in a Toast
-    private static final String SELECT_USER = "Seleccione un usuario o registre uno nuevo.";
+    private static final String SELECT_USER = "Seleccione un usuario o registre uno nuevo";
     private static final String CREATE_NEW_USER = "Debe crear un nuevo usuario para continuar.";
     private static final String NOT_RESPONSE_MESSAGE = "No se ha obtenido respuesta.";
 
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(USERNAME, username);
         //editor.commit();
         editor.apply(); // guarda asincrónicamente y seguro
-        loadSpinner();
+        loadSpinner(username);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         saveUsername(); // comment this line and try it
     }
 
-    private void loadSpinner() {
+    private void loadSpinner(String username) {
         if (registeredUsernames != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, new String[]{SELECT_USER, username});
             usernameSpin.setAdapter(adapter);
@@ -139,8 +139,8 @@ public class LoginActivity extends AppCompatActivity {
             super.onPreExecute();
             //get sharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences(USERNAME, getApplicationContext().MODE_PRIVATE);
-            username = sharedPreferences.getString(USERNAME, "");
-            loadSpinner();
+            //username = sharedPreferences.getString(USERNAME, "");
+            loadSpinner(sharedPreferences.getString(USERNAME, ""));
         }
 
         @Override

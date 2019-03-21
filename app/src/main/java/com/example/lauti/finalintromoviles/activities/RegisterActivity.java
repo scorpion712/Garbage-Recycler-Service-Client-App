@@ -72,7 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
                     saveUserData();
                     // Do POST registering the new user
                     new RegisterUserWS().execute();
-                    // We need to save shared preferences, so we don't start RecyclingActivity.
+                    /**
+                     * How to check if the WS was correctly consumed  ?
+                     */
+                    // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
                     // We go back to Login, save the shared preferences and start the Recycling Activity
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
@@ -100,6 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
         private String linkRequestAPI = "users/";
 
         @Override
+        protected void onProgressUpdate(Void... values) {
+            Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
         protected String doInBackground(Void... params) {
             String result = null;
 
@@ -118,12 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
                     myConnection.setReadTimeout(15000 /* milliseconds */);
                     myConnection.setConnectTimeout(15000 /* milliseconds */);
                     myConnection.setRequestMethod("POST"); // It can be any HTTP Request Method like DELETE, PUT...
+                    myConnection.setRequestProperty("Content-Type", "application/json");
                     myConnection.setDoInput(true);  // we do a input with POST
 
                     // Get Request Response
                     OutputStream os = myConnection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                    //writer.write(getPostDataString(postJSON));
                     writer.write(postJSON.toString());
                     writer.flush();
                     writer.close();
@@ -140,13 +148,13 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                         in.close();
                         result = myStringBuffer.toString();
-                        Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
                     } else {
                         result = new String(ERROR_RESPONSE + responseCode);
+                        Log.e("Result", result);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    //Log.e("Error", e.getMessage());
+                    //e.printStackTrace();
+                    Log.e("Error", e.getMessage());
                 }
             }
             return result;

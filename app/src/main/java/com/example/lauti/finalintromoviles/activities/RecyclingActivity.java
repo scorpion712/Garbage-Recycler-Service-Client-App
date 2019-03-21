@@ -3,7 +3,6 @@ package com.example.lauti.finalintromoviles.activities;
 /**
  * @author: Oneto, Fernando
  * @author: Diez, Lautaro
- *
  * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
  * To find the project:
  * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
@@ -20,12 +19,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
 import com.example.lauti.finalintromoviles.controller.GetRecyclingWebService;
-import com.example.lauti.finalintromoviles.controller.RecyclingAdapter;
 import com.example.lauti.finalintromoviles.model.UserRecycling;
 
 import org.json.JSONException;
@@ -33,17 +30,17 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RecyclingActivity extends AppCompatActivity {
@@ -53,6 +50,8 @@ public class RecyclingActivity extends AppCompatActivity {
     private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
     private static final String RECYCLING_LOAD_MESSAGE = "Reciclado cargado.";
     private static final String RECYCLING_SENT_MESSAGE = "Reciclado enviado.";
+    private static final String DATE_FORMAT = "dd-MM-yyyy";
+    private static final String FILENAME = "User_Recycling_Saved.txt";
 
     // Buttons
     private Button loadButton;
@@ -97,8 +96,8 @@ public class RecyclingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {   // Save locally the UserRecycling data
                 loadUserRecycling();
-                saveUserRecycling();
                 // Internal Storage
+                saveUserRecycling();
                 cleanFields();
                 Toast.makeText(getApplicationContext(), RECYCLING_LOAD_MESSAGE, Toast.LENGTH_LONG).show();
             }
@@ -112,10 +111,12 @@ public class RecyclingActivity extends AppCompatActivity {
                  */
                 loadUserRecycling();
                 // get the local data and plus the new data
+                loadUserRecyclingData();
                 // Start AsyncTask to send the UserRecycling
-                new MyAsincTask(0).execute();
+                new SendUserRecyclingWS().execute();
                 cleanFields();
                 // Remove local saved data
+                deleteUserRecyclingData();
                 Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
             }
         });
@@ -141,6 +142,13 @@ public class RecyclingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * The next three methods could be done in another AsynkTask
+     *
+     *
+     * */
+
     // Save User Recycling data locally
     private void saveUserRecycling() {
         /**
@@ -149,38 +157,87 @@ public class RecyclingActivity extends AppCompatActivity {
          * and now, we want to save bottles:3, tetrabriks:2, paperboard: 5, glass: 0, cans: 0
          * We must add the new data, so we will get (saved) bottles:13, tetrabriks: 6, paperboard:25, glass: 1, cans: 40
          */
-        String FILENAME = "Save Recycling File";
         FileOutputStream fos = null;
         try {
-            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(userRecycling.toJSONObject().toString().getBytes());
-            fos.close();
+            // Load from internal storage
+            loadUserRecyclingData();
+            // Save the file
+            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
+
+            Log.e("To write in file", userRecycling.toJSONObject().toString());
+
+
+            osw.write(userRecycling.toJSONObject().toString());
+            osw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Log.e("Error", e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", e.getMessage());
+            //e.printStackTrace();
         }
     }
 
+    // Load User Recycling data from locally storage
+    private void loadUserRecyclingData() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
+            if (br != null) {
+                String line = br.readLine();
+                if (line != null) {
+                    JSONObject json = new JSONObject(line);
+                    // Do the sum
+                    userRecycling.setBottles(userRecycling.getBottles() + json.getInt("bottles"));  // don't like "bottles", "tetrabriks"...
+                    userRecycling.setTetrabriks(userRecycling.getTetrabriks() + json.getInt("tetrabriks"));
+                    userRecycling.setPaperboard(userRecycling.getPaperboard() + json.getInt("paperboard"));
+                    userRecycling.setGlass(userRecycling.getGlass() + json.getInt("glass"));
+                    userRecycling.setCans(userRecycling.getCans() + json.getInt("cans"));
+                }
+                br.close();
+            }
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+            Log.e("File not Found", e.getMessage());
+        } catch (IOException e) {
+            Log.e("IO ", e.getMessage());
+            //e.printStackTrace();
+        } catch (JSONException e) {
+            Log.e("JSON", e.getMessage());
+            // e.printStackTrace();
+        }
+    }
+
+    // Delete the user recycling data file from internal storage
+    private void deleteUserRecyclingData() {
+        File file = new File(this.getFilesDir(), FILENAME);
+        file.delete();
+    }
+
     // Get the data from the Edit Text and load the User Recycling
+
     /**
      * What to do if all fields are 0 ??
      */
     private void loadUserRecycling() {
-        /*
-        if (bottles.getText().toString() != null && tetrabriks.getText().toString() != null && paperboard.getText().toString() != null &&
-                glass.getText().toString() != null && cans.getText().toString() != null) {
-         */
-            userRecycling = new UserRecycling(new JSONObject());
-
-            userRecycling.setBottles(Integer.parseInt(bottles.getText().toString()));
-            userRecycling.setTetrabriks(Integer.parseInt(tetrabriks.getText().toString()));
-            userRecycling.setPaperboard(Integer.parseInt(paperboard.getText().toString()));
-            userRecycling.setGlass(Integer.parseInt(glass.getText().toString()));
-            userRecycling.setCans(Integer.parseInt(cans.getText().toString()));
-    /*    } else {
+        if (!bottles.getText().toString().equals("0") || !tetrabriks.getText().toString().equals("0") || !paperboard.getText().toString().equals("0") ||
+                !glass.getText().toString().equals("0") || !cans.getText().toString().equals("0")) {
+            try {
+                JSONObject json = new JSONObject();
+                json.put("bottles", Integer.parseInt(bottles.getText().toString()));
+                json.put("tetrabriks", Integer.parseInt(tetrabriks.getText().toString()));
+                json.put("paperboard", Integer.parseInt(paperboard.getText().toString()));
+                json.put("glass", Integer.parseInt(glass.getText().toString()));
+                json.put("cans", Integer.parseInt(cans.getText().toString()));
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                json.put("date", sdf.format(new Date()));
+                userRecycling = new UserRecycling(json);
+            } catch (JSONException e) {
+                //e.printStackTrace();
+                Log.e("Error json", e.getMessage());
+            }
+        } else {
             Toast.makeText(getApplicationContext(), R.string.EMPTY_FIELDS, Toast.LENGTH_LONG).show();
-        }*/
+        }
     }
 
     // Clean Edit Text fields
@@ -192,17 +249,18 @@ public class RecyclingActivity extends AppCompatActivity {
         cans.setText("0");
     }
 
+
     /**
      * This AsyncTask can be used to send data to the service or save data locally.
-     * If code is 0, we send data. If code is 1, we save data locally.
      */
-    private class MyAsincTask extends AsyncTask<URL, Integer, Long> {
+    private class SendUserRecyclingWS extends AsyncTask<URL, Integer, Long> {
 
         private int codeOperation;
         private static final String RECYCLING_SENT_MESSAGE = "Se han enviado sus reciclados";
 
-        private MyAsincTask(int code) {
-            this.codeOperation = code;
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -211,59 +269,53 @@ public class RecyclingActivity extends AppCompatActivity {
             ConnectivityManager connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                switch (codeOperation) {
-                    case 0:
-                        // Consume the WS
-                        URL url = null;
-                        try {
-                            // Create connection to the API
-                            url = new URL(API_LOCALITATION + username + "/recycling");
+                // Consume the WS
+                URL url = null;
+                try {
+                    // Create connection to the API
+                    url = new URL(API_LOCALITATION + username + "/recycling");
 
-                            HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
 
-                            // Connection Parameters
-                            myConnection.setReadTimeout(15000 /* milliseconds */);
-                            myConnection.setConnectTimeout(15000 /* milliseconds */);
-                            myConnection.setRequestMethod("POST"); // It can be any HTTP Request Method like delete, put...
-                            myConnection.setRequestProperty("Content-Type", "application/json");
-                            myConnection.setDoOutput(true);
+                    // Connection Parameters
+                    myConnection.setReadTimeout(15000 /* milliseconds */);
+                    myConnection.setConnectTimeout(15000 /* milliseconds */);
+                    myConnection.setRequestMethod("POST"); // It can be any HTTP Request Method like delete, put...
+                    myConnection.setRequestProperty("Content-Type", "application/json");
+                    myConnection.setDoOutput(true);
 
-                            userRecycling.setDate(new Date(new Date().getTime()).toString()); // set the user recycling date (the sent date)
-                            JSONObject postJSON = userRecycling.toJSONObject(); // JSON to be POST
-                            OutputStream os = myConnection.getOutputStream();
-                            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                            writer.write(postJSON.toString());
-                            writer.flush();
-                            writer.close();
-                            os.close();
-                            int responseCode = myConnection.getResponseCode(); // connection response code
-                            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) { // if it is OK or if */
-                                BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
+                    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                    userRecycling.setDate(sdf.format(new Date())); // set the user recycling date (the send date)
+                    JSONObject postJSON = userRecycling.toJSONObject(); // JSON to be POST
+                    OutputStream os = myConnection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(postJSON.toString());
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                    int responseCode = myConnection.getResponseCode(); // connection response code
+                    if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) { // if it is OK or if */
+                        BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
 
-                                StringBuffer myStringBuffer = new StringBuffer("");
-                                String line = "";
-                                while ((line = in.readLine()) != null) {
-                                    myStringBuffer.append(line);
-                                    break;
-                                }
-                                in.close();
-                                // Show a message saying ALL OK
-                                Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.e("HTTP", " "+responseCode);
-                            }
-                        } catch (ProtocolException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        StringBuffer myStringBuffer = new StringBuffer("");
+                        String line = "";
+                        while ((line = in.readLine()) != null) {
+                            myStringBuffer.append(line);
+                            //break;
                         }
-                        break;
-                    case 1:
-                        // Save data locally
-                        break;
+                        in.close();
+                    } else {
+                        Log.e("HTTP", " " + responseCode);
+                    }
+                    return Long.parseLong(String.valueOf(responseCode));
+                } catch (ProtocolException e) {
+                    //e.printStackTrace();
+                    Log.e("Protocol", e.getMessage());
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                    Log.e("IOExcep", e.getMessage());
                 }
             }
-
             return null;
         }
     }
