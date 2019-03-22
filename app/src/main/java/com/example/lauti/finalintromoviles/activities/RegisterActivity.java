@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     private User user = new User(); // we use this class to save the data to send on the HTTP Request Body in a JSON
 
     private static final String FIELDS_ERROR = "Error en los campos";
+    private boolean requestOk = false; // this boolean is used to check if the user was registered correctly
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,11 @@ public class RegisterActivity extends AppCompatActivity {
                     // We go back to Login, save the shared preferences and start the Recycling Activity
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
-                    setResult(Activity.RESULT_OK, returnIntent);
+                    if (requestOk) {
+                        setResult(Activity.RESULT_OK, returnIntent);
+                    } else {
+                        setResult(Activity.RESULT_CANCELED, returnIntent);
+                    }
                     finish();
                 }
             }
@@ -147,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                             break;
                         }
                         in.close();
+                        requestOk = true;
                         result = myStringBuffer.toString();
                     } else {
                         result = new String(ERROR_RESPONSE + responseCode);

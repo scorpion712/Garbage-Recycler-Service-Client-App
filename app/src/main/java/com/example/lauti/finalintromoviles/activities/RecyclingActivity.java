@@ -164,9 +164,6 @@ public class RecyclingActivity extends AppCompatActivity {
             // Save the file
             OutputStreamWriter osw = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
 
-            Log.e("To write in file", userRecycling.toJSONObject().toString());
-
-
             osw.write(userRecycling.toJSONObject().toString());
             osw.close();
         } catch (FileNotFoundException e) {
@@ -214,10 +211,6 @@ public class RecyclingActivity extends AppCompatActivity {
     }
 
     // Get the data from the Edit Text and load the User Recycling
-
-    /**
-     * What to do if all fields are 0 ??
-     */
     private void loadUserRecycling() {
         if (!bottles.getText().toString().equals("0") || !tetrabriks.getText().toString().equals("0") || !paperboard.getText().toString().equals("0") ||
                 !glass.getText().toString().equals("0") || !cans.getText().toString().equals("0")) {

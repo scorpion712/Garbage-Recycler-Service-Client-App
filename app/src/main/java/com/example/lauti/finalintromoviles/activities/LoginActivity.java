@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             //get sharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences(USERNAME, getApplicationContext().MODE_PRIVATE);
             //username = sharedPreferences.getString(USERNAME, "");
-            loadSpinner(sharedPreferences.getString(USERNAME, ""));
+            loadSpinner(sharedPreferences.getString(USERNAME, "")); // if there is no shared preferences
         }
 
         @Override
