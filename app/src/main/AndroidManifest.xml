@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.RecyclingActivity" />
-        <activity android:name=".activities.RecyclingListActivity"></activity>
+        <activity android:name=".activities.RecyclingListActivity" />
+        <activity android:name=".activities.AllRecyclingActivity"></activity>
     </application>
 
 </manifest>

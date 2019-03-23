@@ -73,9 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
                     saveUserData();
                     // Do POST registering the new user
                     new RegisterUserWS().execute();
-                    /**
-                     * How to check if the WS was correctly consumed  ?
-                     */
                     // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
                     // We go back to Login, save the shared preferences and start the Recycling Activity
                     Intent returnIntent = new Intent();

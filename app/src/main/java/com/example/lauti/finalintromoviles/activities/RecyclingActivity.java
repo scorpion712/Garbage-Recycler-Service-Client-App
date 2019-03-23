@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
-import com.example.lauti.finalintromoviles.controller.GetRecyclingWebService;
 import com.example.lauti.finalintromoviles.model.UserRecycling;
 
 import org.json.JSONException;
@@ -52,6 +51,10 @@ public class RecyclingActivity extends AppCompatActivity {
     private static final String RECYCLING_SENT_MESSAGE = "Reciclado enviado.";
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String FILENAME = "User_Recycling_Saved.txt";
+
+
+    // protected static final String [] RECYCLING_MATERIALS = {"bottles", "tetrabriks", "paperboard", "glass", "cans"}; could be used to save the recycling materials name¿? How we use it?
+    // Suppose we want add plastic...
 
     // Buttons
     private Button loadButton;
@@ -137,7 +140,11 @@ public class RecyclingActivity extends AppCompatActivity {
                 // What if the user has no recycling? Show a message
                 // and if only has locally ? Show saying its locally
                 // Start a new Activity that contains a circular graph showing all recycling, put which is local and which ones no.
-                new GetRecyclingWebService(getApplicationContext(), username).execute(); // this class could be inside the activity, like MyAsinkTask
+                //new GetRecyclingWebService(getApplicationContext(), username).execute(); // this class could be inside the activity, like MyAsinkTask
+                Intent allRecyclingActivity = new Intent(getApplicationContext(), AllRecyclingActivity.class);
+                allRecyclingActivity.putExtra(LoginActivity.USERNAME, username); // send the local recycling?
+                startActivity(allRecyclingActivity);
+
             }
         });
     }
@@ -248,7 +255,6 @@ public class RecyclingActivity extends AppCompatActivity {
      */
     private class SendUserRecyclingWS extends AsyncTask<URL, Integer, Long> {
 
-        private int codeOperation;
         private static final String RECYCLING_SENT_MESSAGE = "Se han enviado sus reciclados";
 
         @Override

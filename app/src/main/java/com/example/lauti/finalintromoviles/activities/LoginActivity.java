@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String SELECT_USER = "Seleccione un usuario o registre uno nuevo";
     private static final String CREATE_NEW_USER = "Debe crear un nuevo usuario para continuar.";
     private static final String NOT_RESPONSE_MESSAGE = "No se ha obtenido respuesta.";
+    private static final String REGISTERED_MESSAGE = "Usuario Registrado.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (! usernameSpin.getSelectedItem().equals(SELECT_USER)) {
+                if (! usernameSpin.getSelectedItem().toString().equals(SELECT_USER)) {
                     Intent recyclingActivity = new Intent(getApplicationContext(), RecyclingActivity.class);
+                    username = usernameSpin.getSelectedItem().toString();
                     recyclingActivity.putExtra(USERNAME, username);
                     startActivity(recyclingActivity);
                     finish(); // que hacer cuando cierro sesion?? start loginActivity y finish?
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         switch (requestCode) {
             case REGISTER:  // we receive the new username
                 if (resultCode == RESULT_OK) {  // if the result code is ok
+                    Toast.makeText(this, REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
                     // get the username
                     Bundle extras = intent.getExtras();
                     username = (String) extras.get(USERNAME);
@@ -122,12 +125,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveUsername(); // comment this line and try it
+        saveUsername();
     }
 
     private void loadSpinner(String username) {
         if (registeredUsernames != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, new String[]{SELECT_USER, username});
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, new String[]{SELECT_USER, username, "lisams"});
             usernameSpin.setAdapter(adapter);
         }
     }
