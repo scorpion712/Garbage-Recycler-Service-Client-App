@@ -91,7 +91,6 @@ public class AllRecyclingActivity extends AppCompatActivity {
         //pieChart.setEntryLabelTextSize(20);
         pieChart.setHoleRadius(35f);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setCenterText("Total "/* + total + " t"*/); // total amount in tons
         pieChart.setCenterTextColor(Color.BLACK);
         pieChart.setCenterTextSize(17);
         //pieChart.setUsePercentValues(true);
@@ -133,8 +132,16 @@ public class AllRecyclingActivity extends AppCompatActivity {
         // Set data (labels)
         PieData pieData = new PieData(dataSet);
         pieChart.setData(pieData);
+
+        pieChart.setCenterText("Total "/* + total + " t"*/); // total amount in tons
         pieChart.invalidate(); // refresh
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 
@@ -186,12 +193,15 @@ public class AllRecyclingActivity extends AppCompatActivity {
                          * We already have the response
                          * We must show it in the chart
                          *
+                         * entriesValues
                          * Again we must use "bottles", "tetrabriks"...
                          * respJSON.getInt("bottles");
                          * respJSON.getInt("");
                          * respJSON.getInt("");
                          * respJSON.getInt("");
                          * respJSON.getInt("");
+                         *
+                         * labels: "bottles", "tetrabriks"
                          */
                         result = 1;
                     } else {
@@ -215,6 +225,5 @@ public class AllRecyclingActivity extends AppCompatActivity {
             super.onPostExecute(result);
             loadChartData();
         }
-
-}
+    }
 }
