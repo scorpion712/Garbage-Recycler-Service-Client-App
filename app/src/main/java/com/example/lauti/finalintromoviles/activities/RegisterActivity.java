@@ -97,6 +97,12 @@ public class RegisterActivity extends AppCompatActivity {
         user.setEmail(email.getText().toString());
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     private class RegisterUserWS extends AsyncTask<Void, Void, String> {
 
         private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
