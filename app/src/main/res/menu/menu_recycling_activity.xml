@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Menu items used by RecyclingActivity-->
     <item
         android:id="@+id/help"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="@string/helpst" />
+        android:title="@string/helpst"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/logout"
         android:icon="@android:drawable/ic_lock_power_off"
-        android:title="@string/logoust" />
+        android:title="@string/logoust"
+        app:showAsAction="never"/>
 </menu>
