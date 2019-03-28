@@ -15,13 +15,17 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
+import com.example.lauti.finalintromoviles.dialogs.RecyclingDialog;
 import com.example.lauti.finalintromoviles.model.UserRecycling;
 
 import org.json.JSONException;
@@ -56,6 +60,8 @@ public class RecyclingActivity extends AppCompatActivity {
     // protected static final String [] RECYCLING_MATERIALS = {"bottles", "tetrabriks", "paperboard", "glass", "cans"}; could be used to save the recycling materials name¿? How we use it?
     // Suppose we want add plastic...
 
+    private android.support.v7.widget.Toolbar toolbar;
+
     // Buttons
     private Button loadButton;
     private Button sendButton;
@@ -73,7 +79,33 @@ public class RecyclingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycling);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         initComponents();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_recycling_activity, menu); // make toolbar items' visible
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.help:
+                // show a help dialog
+                new RecyclingDialog().show(getSupportFragmentManager(), "");
+                break;
+            case R.id.logout:
+                // Do the logout. Return to login activity
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+                finish();
+                break;
+        }
+        return true;
     }
 
     private void initComponents() {
@@ -150,11 +182,8 @@ public class RecyclingActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * The next three methods could be done in another AsynkTask
-     *
-     *
-     * */
+     */
 
     // Save User Recycling data locally
     private void saveUserRecycling() {
