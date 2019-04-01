@@ -73,16 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
                     saveUserData();
                     // Do POST registering the new user
                     new RegisterUserWS().execute();
-                    // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
-                    // We go back to Login, save the shared preferences and start the Recycling Activity
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
-                    if (requestOk) {
-                        setResult(Activity.RESULT_OK, returnIntent);
-                    } else {
-                        setResult(Activity.RESULT_CANCELED, returnIntent);
-                    }
-                    finish();
                 }
             }
         });
@@ -111,8 +101,19 @@ public class RegisterActivity extends AppCompatActivity {
         private String linkRequestAPI = "users/";
 
         @Override
-        protected void onProgressUpdate(Void... values) {
-            Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
+            // We go back to Login, save the shared preferences and start the Recycling Activity
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
+            if (requestOk) { //  if we registered the user return to login and first show a message saying User is registered successfully
+                setResult(Activity.RESULT_OK, returnIntent);
+                Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
+            } else {
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+            }
+            finish();
         }
 
         @Override
@@ -128,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
                     url = new URL(API_LOCALITATION + linkRequestAPI); // WS URL
                     HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
 
-                    JSONObject postJSON = user.toJSONObject(); // JSON Object to send on POST
+                    JSONObject postJSON = new JSONObject(user.toJSONObject().toString()); // JSON Object to send on POST
 
                     // Connection Parameters
                     myConnection.setReadTimeout(15000 /* milliseconds */);
@@ -146,17 +147,8 @@ public class RegisterActivity extends AppCompatActivity {
                     os.close();
                     int responseCode = myConnection.getResponseCode();// connection OK?
                     if (responseCode == HttpURLConnection.HTTP_CREATED) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()));
-
-                        StringBuffer myStringBuffer = new StringBuffer("");
-                        String line = "";
-                        while ((line = in.readLine()) != null) {
-                            myStringBuffer.append(line);
-                            break;
-                        }
-                        in.close();
                         requestOk = true;
-                        result = myStringBuffer.toString();
+                        result = REGISTERED_MESSAGE;
                     } else {
                         result = new String(ERROR_RESPONSE + responseCode);
                         Log.e("Result", result);

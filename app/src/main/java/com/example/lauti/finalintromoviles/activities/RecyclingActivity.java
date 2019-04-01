@@ -315,6 +315,7 @@ public class RecyclingActivity extends AppCompatActivity {
                     SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
                     userRecycling.setDate(sdf.format(new Date())); // set the user recycling date (the send date)
                     JSONObject postJSON = userRecycling.toJSONObject(); // JSON to be POST
+
                     OutputStream os = myConnection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                     writer.write(postJSON.toString());

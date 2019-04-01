@@ -8,19 +8,17 @@ import org.json.JSONObject;
 /**
  * @author: Oneto, Fernando
  * @author: Diez, Lautaro
- *
  * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
  * To find the project:
  * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
- *
  */
 public class User {
 
     private String firstname;
     private String lastname;
     private String username;
-    private String address;
-    private String email;
+    private String address="";
+    private String email="";
 
     public User() {
     }
@@ -70,11 +68,15 @@ public class User {
     public JSONObject toJSONObject() {
         JSONObject userJSON = new JSONObject();
         try {
-        userJSON.put("firstname", firstname);
-        userJSON.put("lastname", lastname);
-        userJSON.put("username", username);
-        userJSON.put("address", address);
-        userJSON.put("mail", email);
+            userJSON.put("firstname", firstname);
+            userJSON.put("lastname", lastname);
+            userJSON.put("username", username);
+            if (!address.equals("")) {
+                userJSON.put("address", address);
+            }
+            if (!email.equals("")) {
+                userJSON.put("email", email);
+            }
         } catch (JSONException e) {
             Log.e("Error:", e.getMessage());
         }

@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
         switch (requestCode) {
             case REGISTER:  // we receive the new username
                 if (resultCode == RESULT_OK) {  // if the result code is ok
-                    Toast.makeText(this, REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
                     // get the username
                     Bundle extras = intent.getExtras();
                     username = (String) extras.get(USERNAME);
