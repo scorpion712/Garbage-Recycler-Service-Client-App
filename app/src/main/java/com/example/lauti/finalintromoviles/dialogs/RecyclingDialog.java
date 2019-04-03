@@ -20,7 +20,7 @@ public class RecyclingDialog extends AppCompatDialogFragment {
     private static final String DIALOG_TITLE = "Ayuda";
     private static final String HELP_TEXT = "Para registrar un reciclado debe completar los campos que corresponda. Si no posee reciclado de alguna clase coloque 0 (cero). \n";
     private static final String LOAD_BUTTON="CARGAR: almacena el reciclado ingresado en el dispositivo.\n";
-    private static final String SEND_BUTTON="ENVIAR: envia el reciclado ingresado al servidor.\n";
+    private static final String SEND_BUTTON="ENVIAR: envia el reciclado ingresado al servidor. Nota: para enviar un reciclado, primero deberá cargarlo.\n";
     private static final String LIST_VIEW="VER RECICLADOS: muestra la lista de todos los reciclados que posee.\n";
     private static final String VIEW_ALL="VER TOTAL: muestra el total en cantidad de reciclados y su peso en toneladas.";
 

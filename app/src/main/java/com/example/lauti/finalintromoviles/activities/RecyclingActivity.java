@@ -49,12 +49,16 @@ import java.util.Date;
 public class RecyclingActivity extends AppCompatActivity {
 
     private String username;
-    private UserRecycling userRecycling; // this is used to send a JSON in a HTTP Request Body
+    private UserRecycling userRecycling = null; // this is used to send a JSON in a HTTP Request Body
     private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
     private static final String RECYCLING_LOAD_MESSAGE = "Reciclado cargado.";
     private static final String RECYCLING_SENT_MESSAGE = "Reciclado enviado.";
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String FILENAME = "User_Recycling_Saved.txt";
+    private static final String SAVE_FILE_ERROR_MESSAGE = "Error al guardar el archivo";
+    private static final String LOAD_FILE_ERROR_MESSAGE = "Error al cargar el archivo";
+    private static final String FIELD_ERROR_MESSAGE = "Error en los campos";
+    private static final String NOT_SAVE_ERROR_MESSAGE = "Para enviar un reciclado primero debe cargarlo";
 
 
     // protected static final String [] RECYCLING_MATERIALS = {"bottles", "tetrabriks", "paperboard", "glass", "cans"}; could be used to save the recycling materials name¿? How we use it?
@@ -131,28 +135,27 @@ public class RecyclingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {   // Save locally the UserRecycling data
                 loadUserRecycling();
-                // Internal Storage
-                saveUserRecycling();
-                cleanFields();
-                Toast.makeText(getApplicationContext(), RECYCLING_LOAD_MESSAGE, Toast.LENGTH_LONG).show();
+                if (userRecycling != null) {
+                    // Internal Storage
+                    saveUserRecycling();
+                    cleanFields();
+                    userRecycling = null; // we set it as null to control the send data
+                    Toast.makeText(getApplicationContext(), RECYCLING_LOAD_MESSAGE, Toast.LENGTH_LONG).show();
+                }
             }
         });
         sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * We must send all the recycling, including the local storage
-                 */
-                loadUserRecycling();
-                // get the local data and plus the new data
                 loadUserRecyclingData();
-                // Start AsyncTask to send the UserRecycling
-                new SendUserRecyclingWS().execute();
-                cleanFields();
-                // Remove local saved data
-                deleteUserRecyclingData();
-                Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
+                if (userRecycling != null &&    // if fields are not "0" it means that there is a no saved recycling
+                        (bottles.getText().toString().equals("0") && tetrabriks.getText().toString().equals("0") && paperboard.getText().toString().equals("0") && glass.getText().toString().equals("0") && cans.getText().toString().equals("0"))) {
+                    new SendUserRecyclingWS().execute(); // Start AsyncTask to send the UserRecycling
+                    deleteUserRecyclingData(); // Remove local saved data
+                } else {
+                    Toast.makeText(getApplicationContext(), NOT_SAVE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
+                }
             }
         });
         showRecyclng = (Button) findViewById(R.id.recyclingListButton);
@@ -197,17 +200,17 @@ public class RecyclingActivity extends AppCompatActivity {
         try {
             // Load from internal storage
             loadUserRecyclingData();
-            // Save the file
+            // Saving the file
             OutputStreamWriter osw = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
 
             osw.write(userRecycling.toJSONObject().toString());
             osw.close();
         } catch (FileNotFoundException e) {
-            //e.printStackTrace();
             Log.e("Error", e.getMessage());
+            Toast.makeText(getApplicationContext(), SAVE_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("Error", e.getMessage());
-            //e.printStackTrace();
+            Toast.makeText(getApplicationContext(), SAVE_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -219,24 +222,27 @@ public class RecyclingActivity extends AppCompatActivity {
                 String line = br.readLine();
                 if (line != null) {
                     JSONObject json = new JSONObject(line);
-                    // Do the sum
-                    userRecycling.setBottles(userRecycling.getBottles() + json.getInt("bottles"));  // don't like "bottles", "tetrabriks"...
-                    userRecycling.setTetrabriks(userRecycling.getTetrabriks() + json.getInt("tetrabriks"));
-                    userRecycling.setPaperboard(userRecycling.getPaperboard() + json.getInt("paperboard"));
-                    userRecycling.setGlass(userRecycling.getGlass() + json.getInt("glass"));
-                    userRecycling.setCans(userRecycling.getCans() + json.getInt("cans"));
+                    if (userRecycling != null) {
+                        // Do the sum between the saved data (json) and the loaded data (userRecycling)
+                        userRecycling.setBottles(userRecycling.getBottles() + json.getInt("bottles"));  // don't like "bottles", "tetrabriks"...
+                        userRecycling.setTetrabriks(userRecycling.getTetrabriks() + json.getInt("tetrabriks"));
+                        userRecycling.setPaperboard(userRecycling.getPaperboard() + json.getInt("paperboard"));
+                        userRecycling.setGlass(userRecycling.getGlass() + json.getInt("glass"));
+                        userRecycling.setCans(userRecycling.getCans() + json.getInt("cans"));
+                    } else {
+                        userRecycling = new UserRecycling(json);
+                    }
                 }
                 br.close();
             }
         } catch (FileNotFoundException e) {
-            //e.printStackTrace();
             Log.e("File not Found", e.getMessage());
         } catch (IOException e) {
             Log.e("IO ", e.getMessage());
-            //e.printStackTrace();
+            Toast.makeText(getApplicationContext(), LOAD_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             Log.e("JSON", e.getMessage());
-            // e.printStackTrace();
+            Toast.makeText(getApplicationContext(), LOAD_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -246,7 +252,7 @@ public class RecyclingActivity extends AppCompatActivity {
         file.delete();
     }
 
-    // Get the data from the Edit Text and load the User Recycling
+    // Get the data from the Edit Text and load the User Recycling object
     private void loadUserRecycling() {
         if (!bottles.getText().toString().equals("0") || !tetrabriks.getText().toString().equals("0") || !paperboard.getText().toString().equals("0") ||
                 !glass.getText().toString().equals("0") || !cans.getText().toString().equals("0")) {
@@ -265,7 +271,7 @@ public class RecyclingActivity extends AppCompatActivity {
                 Log.e("Error json", e.getMessage());
             }
         } else {
-            Toast.makeText(getApplicationContext(), R.string.EMPTY_FIELDS, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), FIELD_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -285,15 +291,15 @@ public class RecyclingActivity extends AppCompatActivity {
     private class SendUserRecyclingWS extends AsyncTask<URL, Integer, Long> {
 
         private static final String RECYCLING_SENT_MESSAGE = "Se han enviado sus reciclados";
+        private boolean sent = false;
 
         @Override
-        protected void onProgressUpdate(Integer... progress) {
+        protected void onPostExecute(Long aLong) {
             Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
         }
 
         @Override
         protected Long doInBackground(URL... urls) {
-
             ConnectivityManager connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
@@ -333,6 +339,7 @@ public class RecyclingActivity extends AppCompatActivity {
                             //break;
                         }
                         in.close();
+                        sent = true;
                     } else {
                         Log.e("HTTP", " " + responseCode);
                     }
