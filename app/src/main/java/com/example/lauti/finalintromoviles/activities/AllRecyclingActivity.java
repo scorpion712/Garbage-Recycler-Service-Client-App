@@ -1,17 +1,20 @@
 package com.example.lauti.finalintromoviles.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.lauti.finalintromoviles.R;
+import com.example.lauti.finalintromoviles.dialogs.AllRecyclingDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -28,15 +31,16 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllRecyclingActivity extends AppCompatActivity {
 
     private String username;
     private static final String CHART_DESCRIPTION = "Total reciclado hasta hoy.";
+    private static final String CHART_DESCRIPTION_EMPTY = "Usted no ha enviado reciclados.";
 
     private PieChart pieChart;
-    private Button showSent;
-    private Button showLocal;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,38 +50,39 @@ public class AllRecyclingActivity extends AppCompatActivity {
         initComponents();
         new GetRecyclingWebService().execute();
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); // adding the customized toolbar
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu); // make toolbar items' visible
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.help:
+                // show a help dialog
+                new AllRecyclingDialog().show(getSupportFragmentManager(), "");
+                break;
+            case R.id.logout:
+                // Do the logout. Return to login activity
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+                finish();
+                break;
+        }
+        return true;
     }
 
     private void initComponents() {
         // Getting the username
         Bundle extras = getIntent().getExtras();
         username = (String) extras.get(LoginActivity.USERNAME);
-
-        // mapping buttons
-        showSent = (Button) findViewById(R.id.showSent);
-        showSent.setVisibility(View.INVISIBLE); // hide the button
-        showSent.setEnabled(false);
-        showSent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // consume the service;
-                showSent.setVisibility(View.INVISIBLE); // hide the button
-                showSent.setEnabled(false);
-                showLocal.setVisibility(View.VISIBLE);
-                showLocal.setEnabled(true);
-            }
-        });
-        showLocal = (Button) findViewById(R.id.showLocally);
-        showLocal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLocal.setVisibility(View.INVISIBLE);
-                showLocal.setEnabled(false);
-                // loadLocalData();
-                showSent.setVisibility(View.VISIBLE);
-                showSent.setEnabled(true);
-            }
-        });
 
         // mapping the chart
         pieChart = (PieChart) findViewById(R.id.graph);
@@ -98,18 +103,13 @@ public class AllRecyclingActivity extends AppCompatActivity {
 
     }
 
-    private void loadChartData() {
+    // Load pie chart data using the received parameters from the service response
+    private void loadChartData(List<Integer> entriesValues, String [] labelsName, Double total) {
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        // Hardcoding like a champ
-        int [] entriesValues = {20, 35, 42, 11, 7};
-        String [] labelsName = {"bottles", "tetrabriks", "paperboard", "glass", "cans"};
-
-        // Also we have the sum (tons) in the response
-
-        for (int i=0; i < entriesValues.length; i++) {
+        for (int i =0; i < entriesValues.size(); i++) {
             //pieEntries.add(new PieEntry(entriesValues[i], RecyclingActivity.RECYCLING_MATERIALS[i].substring(0,1).toUpperCase() + RecyclingActivity.RECYCLING_MATERIALS[i].substring(1).toLowerCase()));
-            pieEntries.add(new PieEntry(entriesValues[i], labelsName[i].substring(0,1).toUpperCase() + labelsName[i].substring(1).toLowerCase()));
+            pieEntries.add(new PieEntry(entriesValues.get(i), labelsName[i].substring(0,1).toUpperCase() + labelsName[i].substring(1).toLowerCase()));
         }
 
         // Create the data set
@@ -133,7 +133,12 @@ public class AllRecyclingActivity extends AppCompatActivity {
         PieData pieData = new PieData(dataSet);
         pieChart.setData(pieData);
 
-        pieChart.setCenterText("Total "/* + total + " t"*/); // total amount in tons
+        pieChart.setCenterText("Total " + total + " t"); // total amount in tons
+        if (total <= 0) {
+            Description description = new Description();
+            description.setText(CHART_DESCRIPTION_EMPTY); // create customized description
+            pieChart.setDescription(description); // set the description
+        }
         pieChart.invalidate(); // refresh
 
     }
@@ -156,6 +161,11 @@ public class AllRecyclingActivity extends AppCompatActivity {
          */
         private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
         private String webServiceAction = "recycling/";
+
+
+        private List<Integer> entriesValues = new ArrayList<>();
+        private String [] labelsName = {"empty"};
+        private Double total = 0.0;
 
         public GetRecyclingWebService () {
             webServiceAction = API_LOCALITATION + webServiceAction + username + "/";
@@ -189,20 +199,15 @@ public class AllRecyclingActivity extends AppCompatActivity {
                         }
                         br.close();
                         JSONObject respJSON = new JSONObject(sb.toString()); // get the JSON Response
-                        /**
-                         * We already have the response
-                         * We must show it in the chart
-                         *
-                         * entriesValues
-                         * Again we must use "bottles", "tetrabriks"...
-                         * respJSON.getInt("bottles");
-                         * respJSON.getInt("");
-                         * respJSON.getInt("");
-                         * respJSON.getInt("");
-                         * respJSON.getInt("");
-                         *
-                         * labels: "bottles", "tetrabriks"
-                         */
+                        entriesValues.add(respJSON.getInt("bottles"));
+                        entriesValues.add(respJSON.getInt("tetrabriks"));
+                        entriesValues.add(respJSON.getInt("paperboard"));
+                        entriesValues.add(respJSON.getInt("glass"));
+                        entriesValues.add(respJSON.getInt("cans"));
+
+                        total = respJSON.getDouble("tons");
+
+                        labelsName = new String[]{"bottles", "tetrabriks", "paperboard", "glass", "cans"};
                         result = 1;
                     } else {
                         //Toast.makeText(context, "Response error", Toast.LENGTH_SHORT).show();
@@ -223,7 +228,7 @@ public class AllRecyclingActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Long result) {
             super.onPostExecute(result);
-            loadChartData();
+            loadChartData(entriesValues, labelsName, total);
         }
     }
 }

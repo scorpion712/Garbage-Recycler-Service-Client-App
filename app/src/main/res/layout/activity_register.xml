@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".activities.RegisterActivity">
 
+
+    <include
+        layout="@layout/toolbar"
+        android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="111dp"
         android:layout_height="35dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Nombre:" />
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="79dp"
+        android:text="Nombre:"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -20,8 +31,11 @@
         android:layout_height="35dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp"
-        android:text="Apellido:" />
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="25dp"
+        android:text="Apellido:"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -29,9 +43,11 @@
         android:layout_height="35dp"
         android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="22dp"
-        android:text="Username:" />
+        android:text="Username:"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -39,9 +55,11 @@
         android:layout_height="35dp"
         android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="24dp"
-        android:text="Dirección:" />
+        android:text="Dirección:"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -49,9 +67,11 @@
         android:layout_height="35dp"
         android:layout_below="@+id/textView4"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="21dp"
-        android:text="E-Mail:" />
+        android:text="E-Mail:"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp" />
 
     <Button
         android:id="@+id/registerButton"
@@ -62,11 +82,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginRight="142dp"
-        android:layout_marginBottom="158dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginLeft="131dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginRight="155dp"
+        android:layout_marginBottom="123dp"
         android:text="Registrar" />
 
     <EditText
@@ -75,8 +95,12 @@
         android:layout_height="35dp"
         android:layout_alignBottom="@+id/textView5"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:layout_marginRight="0dp"
+        android:layout_alignParentRight="true" />
 
     <EditText
         android:id="@+id/nameText"
@@ -84,8 +108,12 @@
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="0dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp" />
 
     <EditText
         android:id="@+id/lastNameText"
@@ -93,9 +121,12 @@
         android:layout_height="35dp"
         android:layout_below="@+id/nameText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="0dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp" />
 
     <EditText
         android:id="@+id/usernameText"
@@ -105,8 +136,12 @@
         android:layout_alignBottom="@+id/textView3"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="22dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp" />
 
     <EditText
         android:id="@+id/addressText"
@@ -115,6 +150,9 @@
         android:layout_below="@+id/usernameText"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="0dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp" />
 </RelativeLayout>

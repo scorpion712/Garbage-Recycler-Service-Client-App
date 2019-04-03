@@ -1,22 +1,25 @@
 package com.example.lauti.finalintromoviles.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
 import com.example.lauti.finalintromoviles.controller.RecyclingAdapter;
+import com.example.lauti.finalintromoviles.dialogs.RecyclingListDialog;
 import com.example.lauti.finalintromoviles.model.UserRecycling;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +34,7 @@ public class RecyclingListActivity extends AppCompatActivity {
 
     private List<UserRecycling> recyclingList = new ArrayList<>();
     private String username;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,32 @@ public class RecyclingListActivity extends AppCompatActivity {
         RecyclingAdapter adapter = new RecyclingAdapter(getApplicationContext(), recyclingList);
         recyclingListView.setAdapter(adapter);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); // adding the customized toolbar
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu); // make toolbar items' visible
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.help:
+                // show a help dialog
+                new RecyclingListDialog().show(getSupportFragmentManager(), "");
+                break;
+            case R.id.logout:
+                // Do the logout. Return to login activity
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+                finish();
+                break;
+        }
+        return true;
     }
 
     @Override
