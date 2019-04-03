@@ -22,6 +22,7 @@
         android:layout_below="@+id/spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
+        android:background="@drawable/button"
         android:text="LogIn" />
 
     <Button
@@ -31,5 +32,6 @@
         android:layout_below="@+id/loginButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
+        android:background="@drawable/button"
         android:text="Create New" />
 </RelativeLayout>
