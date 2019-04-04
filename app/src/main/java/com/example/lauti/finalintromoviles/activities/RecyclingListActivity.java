@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
 import com.example.lauti.finalintromoviles.controller.RecyclingAdapter;
@@ -46,16 +47,6 @@ public class RecyclingListActivity extends AppCompatActivity {
 
         // Consume the Web Service GET username recycling list
         new RecyclingListWS().execute();
-
-        /**
-         * We must load the user recycling saved by the user on internal storage. So we
-         * could show the locally and whats its on the server side.
-         */
-
-        // Create a the view
-        ListView recyclingListView = (ListView) findViewById(R.id.listView);
-        RecyclingAdapter adapter = new RecyclingAdapter(getApplicationContext(), recyclingList);
-        recyclingListView.setAdapter(adapter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // adding the customized toolbar
@@ -103,6 +94,8 @@ public class RecyclingListActivity extends AppCompatActivity {
         private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
         private String webServiceAction = "users_recycling/";
 
+        private static final String WS_ERROR = "Error al conectar con el servicio";
+
         private void loadUserRecyclingList(JSONArray jsonArray) {
             for(int i=0; i < jsonArray.length(); i++) {
                 try {
@@ -144,7 +137,7 @@ public class RecyclingListActivity extends AppCompatActivity {
                         JSONArray respJSON = new JSONArray(sb.toString()); // get the JSON Response
 
                         loadUserRecyclingList(respJSON);
-                        result = 1;
+                        return result = 1;
                     } else {
                         Log.e("HTTP Result code", "" + httpResult);
                     }
@@ -168,6 +161,19 @@ public class RecyclingListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Long result) {
             super.onPostExecute(result);
+
+            /**
+             * We must load the user recycling saved by the user on internal storage. So we
+             * could show the locally and whats its on the server side.
+             */
+            if (result != 0) {
+                // Create a the view
+                ListView recyclingListView = (ListView) findViewById(R.id.listView);
+                RecyclingAdapter adapter = new RecyclingAdapter(getApplicationContext(), recyclingList);
+                recyclingListView.setAdapter(adapter);
+            } else {
+                Toast.makeText(getApplicationContext(), WS_ERROR, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

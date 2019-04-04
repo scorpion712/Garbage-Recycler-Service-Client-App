@@ -136,13 +136,13 @@ public class RegisterActivity extends AppCompatActivity {
         private String linkRequestAPI = "users/";
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
             // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
             // We go back to Login, save the shared preferences and start the Recycling Activity
             Intent returnIntent = new Intent();
             returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
-            if (requestOk) { //  if we registered the user return to login and first show a message saying User is registered successfully
+            if (result.equals(REGISTERED_MESSAGE)) { //  if we registered the user return to login and first show a message saying User is registered successfully
                 setResult(Activity.RESULT_OK, returnIntent);
                 Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();
             } else {
@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            String result = null;
+            String result = "";
 
             ConnectivityManager connMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -182,18 +182,16 @@ public class RegisterActivity extends AppCompatActivity {
                     os.close();
                     int responseCode = myConnection.getResponseCode();// connection OK?
                     if (responseCode == HttpURLConnection.HTTP_CREATED) {
-                        requestOk = true;
-                        result = REGISTERED_MESSAGE;
+                        return result = REGISTERED_MESSAGE;
                     } else {
-                        result = new String(ERROR_RESPONSE + responseCode);
-                        Log.e("Result", result);
+                        Log.e("Result HTTP",""+ responseCode);
                     }
                 } catch (Exception e) {
                     //e.printStackTrace();
                     Log.e("Error", e.getMessage());
                 }
             }
-            return result;
+            return result ;
         }
 
     }

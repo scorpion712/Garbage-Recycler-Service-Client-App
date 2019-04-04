@@ -1,14 +1,7 @@
 package com.example.lauti.finalintromoviles.model;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author: Oneto, Fernando
@@ -25,7 +18,14 @@ public class UserRecycling {
     private int glass;
     private int cans;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); // Date format
+    // Static variables used to access to json fields
+    public static final String BOTTLES = "bottles";
+    public static final String TETRABRIKS = "tetrabriks";
+    public static final String PAPERBOARD = "paperboard";
+    public static final String GLASS = "glass";
+    public static final String CANS = "cans";
+    public static final String DATE = "date";
+
     private String date;
 
     public void setBottles(int bottles) {
@@ -56,12 +56,12 @@ public class UserRecycling {
     public JSONObject toJSONObject() {
         JSONObject json = new JSONObject();
         try {
-            json.put("bottles", bottles);
-            json.put("tetrabriks", tetrabriks);
-            json.put("paperboard", paperboard);
-            json.put("glass", glass);
-            json.put("cans", cans);
-            json.put("date", date.toString());
+            json.put(BOTTLES, bottles);
+            json.put(TETRABRIKS, tetrabriks);
+            json.put(PAPERBOARD, paperboard);
+            json.put(GLASS, glass);
+            json.put(CANS, cans);
+            json.put(DATE, date.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -71,12 +71,12 @@ public class UserRecycling {
     // Create a User Recycling using a json
     public UserRecycling(JSONObject json) {
         try {
-            this.bottles = json.getInt("bottles");
-            this.tetrabriks = json.getInt("tetrabriks");
-            this.paperboard = json.getInt("paperboard");
-            this.glass = json.getInt("glass");
-            this.cans = json.getInt("cans");
-            this.date = json.getString("date");
+            this.bottles = json.getInt(BOTTLES);
+            this.tetrabriks = json.getInt(TETRABRIKS);
+            this.paperboard = json.getInt(PAPERBOARD);
+            this.glass = json.getInt(GLASS);
+            this.cans = json.getInt(CANS);
+            this.date = json.getString(DATE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -102,6 +102,7 @@ public class UserRecycling {
         return bottles;
 
     }
+
 
     public String getDate() {
         return date;

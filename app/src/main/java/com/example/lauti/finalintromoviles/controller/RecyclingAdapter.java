@@ -47,9 +47,7 @@ public class RecyclingAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.item_list_view, null);
 
-        /**
-         * Here could map images too
-         */
+        // Mapping text views
         TextView dateText = (TextView) view.findViewById(R.id.dateText);
         TextView bottlesText = (TextView) view.findViewById(R.id.bottlesText);
         TextView tetrabriksText = (TextView) view.findViewById(R.id.tetrabriksText);
@@ -57,17 +55,30 @@ public class RecyclingAdapter extends BaseAdapter {
         TextView glassText = (TextView) view.findViewById(R.id.glassText);
         TextView cansText = (TextView) view.findViewById(R.id.cansText);
 
-        if (userRecyclingList.size() > 0) {
-            dateText.setText(userRecyclingList.get(position).getDate());  // set recycling date
-            bottlesText.setText("Botellas:  " + userRecyclingList.get(position).getBottles()); // set bottles amount
-            tetrabriksText.setText("Tetrabriks:  " +userRecyclingList.get(position).getTetrabriks()); // set tetrabriks amount
-            paperboardText.setText("Cartones:  " + userRecyclingList.get(position).getPaperboard()); // set paperboard amount;
-            glassText.setText("Vidrio:  " + userRecyclingList.get(position).getGlass()); // set glass amount
-            cansText.setText("Latas:  " + userRecyclingList.get(position).getCans()); // set cans amount
-        } else {
-            dateText.setText("El usuario no ha registrado reciclados.");
-        }
+        // Mapping image views
+        ImageView bottlesImg = (ImageView) view.findViewById(R.id.bottlesImage);
+        ImageView tetrabrikImg = (ImageView) view.findViewById(R.id.tetrabriksImage);
+        ImageView paperboardImg = (ImageView) view.findViewById(R.id.paperboardImage);
+        ImageView glassImg = (ImageView) view.findViewById(R.id.glassImage);
+        ImageView cansImg = (ImageView) view.findViewById(R.id.cansImage);
+
+        // Setting images to image views
+        bottlesImg.setImageResource(R.drawable.ic_bottles);
+        tetrabrikImg.setImageResource(R.drawable.ic_tetrabriks);
+        paperboardImg.setImageResource(R.drawable.ic_paperboard);
+        glassImg.setImageResource(R.drawable.ic_glass);
+        cansImg.setImageResource(R.drawable.ic_cans);
+
+        dateText.setText(userRecyclingList.get(position).getDate());  // set recycling date
+
+        bottlesText.setText(bottlesText.getText() + " " + userRecyclingList.get(position).getBottles()); // set bottles amount
+        tetrabriksText.setText(tetrabriksText.getText() + " " + userRecyclingList.get(position).getTetrabriks()); // set tetrabriks amount
+        paperboardText.setText(paperboardText.getText() + " " + userRecyclingList.get(position).getPaperboard()); // set paperboard amount;
+        glassText.setText(glassText.getText() + " " + userRecyclingList.get(position).getGlass()); // set glass amount
+        cansText.setText(cansText.getText() + " " + userRecyclingList.get(position).getCans()); // set cans amount
 
         return view;
     }
+
+
 }

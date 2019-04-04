@@ -34,8 +34,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException; 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -52,7 +51,6 @@ public class RecyclingActivity extends AppCompatActivity {
     private UserRecycling userRecycling = null; // this is used to send a JSON in a HTTP Request Body
     private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
     private static final String RECYCLING_LOAD_MESSAGE = "Reciclado cargado.";
-    private static final String RECYCLING_SENT_MESSAGE = "Reciclado enviado.";
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String FILENAME = "User_Recycling_Saved.txt";
     private static final String SAVE_FILE_ERROR_MESSAGE = "Error al guardar el archivo";
@@ -60,9 +58,6 @@ public class RecyclingActivity extends AppCompatActivity {
     private static final String FIELD_ERROR_MESSAGE = "Error en los campos";
     private static final String NOT_SAVE_ERROR_MESSAGE = "Para enviar un reciclado primero debe cargarlo";
 
-
-    // protected static final String [] RECYCLING_MATERIALS = {"bottles", "tetrabriks", "paperboard", "glass", "cans"}; could be used to save the recycling materials name¿? How we use it?
-    // Suppose we want add plastic...
 
     private android.support.v7.widget.Toolbar toolbar;
 
@@ -184,10 +179,6 @@ public class RecyclingActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * The next three methods could be done in another AsynkTask
-     */
-
     // Save User Recycling data locally
     private void saveUserRecycling() {
         /**
@@ -196,7 +187,6 @@ public class RecyclingActivity extends AppCompatActivity {
          * and now, we want to save bottles:3, tetrabriks:2, paperboard: 5, glass: 0, cans: 0
          * We must add the new data, so we will get (saved) bottles:13, tetrabriks: 6, paperboard:25, glass: 1, cans: 40
          */
-        FileOutputStream fos = null;
         try {
             // Load from internal storage
             loadUserRecyclingData();
@@ -205,10 +195,7 @@ public class RecyclingActivity extends AppCompatActivity {
 
             osw.write(userRecycling.toJSONObject().toString());
             osw.close();
-        } catch (FileNotFoundException e) {
-            Log.e("Error", e.getMessage());
-            Toast.makeText(getApplicationContext(), SAVE_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("Error", e.getMessage());
             Toast.makeText(getApplicationContext(), SAVE_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         }
@@ -224,12 +211,12 @@ public class RecyclingActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(line);
                     if (userRecycling != null) {
                         // Do the sum between the saved data (json) and the loaded data (userRecycling)
-                        userRecycling.setBottles(userRecycling.getBottles() + json.getInt("bottles"));  // don't like "bottles", "tetrabriks"...
-                        userRecycling.setTetrabriks(userRecycling.getTetrabriks() + json.getInt("tetrabriks"));
-                        userRecycling.setPaperboard(userRecycling.getPaperboard() + json.getInt("paperboard"));
-                        userRecycling.setGlass(userRecycling.getGlass() + json.getInt("glass"));
-                        userRecycling.setCans(userRecycling.getCans() + json.getInt("cans"));
-                    } else {
+                        userRecycling.setBottles(userRecycling.getBottles() + json.getInt(UserRecycling.BOTTLES));  // don't like "bottles", "tetrabriks"...
+                        userRecycling.setTetrabriks(userRecycling.getTetrabriks() + json.getInt(UserRecycling.TETRABRIKS));
+                        userRecycling.setPaperboard(userRecycling.getPaperboard() + json.getInt(UserRecycling.PAPERBOARD));
+                        userRecycling.setGlass(userRecycling.getGlass() + json.getInt(UserRecycling.GLASS));
+                        userRecycling.setCans(userRecycling.getCans() + json.getInt(UserRecycling.CANS));
+                    } else { // It's new (the 1st)
                         userRecycling = new UserRecycling(json);
                     }
                 }
@@ -258,13 +245,13 @@ public class RecyclingActivity extends AppCompatActivity {
                 !glass.getText().toString().equals("0") || !cans.getText().toString().equals("0")) {
             try {
                 JSONObject json = new JSONObject();
-                json.put("bottles", Integer.parseInt(bottles.getText().toString()));
-                json.put("tetrabriks", Integer.parseInt(tetrabriks.getText().toString()));
-                json.put("paperboard", Integer.parseInt(paperboard.getText().toString()));
-                json.put("glass", Integer.parseInt(glass.getText().toString()));
-                json.put("cans", Integer.parseInt(cans.getText().toString()));
+                json.put(UserRecycling.BOTTLES, Integer.parseInt(bottles.getText().toString()));
+                json.put(UserRecycling.TETRABRIKS, Integer.parseInt(tetrabriks.getText().toString()));
+                json.put(UserRecycling.PAPERBOARD, Integer.parseInt(paperboard.getText().toString()));
+                json.put(UserRecycling.GLASS, Integer.parseInt(glass.getText().toString()));
+                json.put(UserRecycling.CANS, Integer.parseInt(cans.getText().toString()));
                 SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-                json.put("date", sdf.format(new Date()));
+                json.put(UserRecycling.DATE, sdf.format(new Date()));
                 userRecycling = new UserRecycling(json);
             } catch (JSONException e) {
                 //e.printStackTrace();
@@ -291,11 +278,16 @@ public class RecyclingActivity extends AppCompatActivity {
     private class SendUserRecyclingWS extends AsyncTask<URL, Integer, Long> {
 
         private static final String RECYCLING_SENT_MESSAGE = "Se han enviado sus reciclados";
+        private static final String RECYCLING_SENT_ERROR_MESSAGE = "Error al conectar al servidor";
         private boolean sent = false;
 
         @Override
         protected void onPostExecute(Long aLong) {
-            Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
+            if (sent) {
+                Toast.makeText(getApplicationContext(), RECYCLING_SENT_MESSAGE, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), RECYCLING_SENT_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
