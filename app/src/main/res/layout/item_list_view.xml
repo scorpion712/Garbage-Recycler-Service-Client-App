@@ -11,7 +11,8 @@
         android:layout_height="45dp"
         android:layout_below="@+id/dateText"
         android:layout_marginTop="1dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_bottles"
+        android:contentDescription="@string/img_desc"  />
 
     <ImageView
         android:id="@+id/tetrabriksImage"
@@ -20,7 +21,8 @@
         android:layout_below="@+id/bottlesImage"
 
         android:layout_marginTop="0dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_tetrabriks"
+        android:contentDescription="@string/img_desc" />
 
     <ImageView
         android:id="@+id/paperboardImage"
@@ -28,7 +30,8 @@
         android:layout_height="45dp"
         android:layout_below="@+id/tetrabriksImage"
         android:layout_marginTop="0dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_paperboard"
+        android:contentDescription="@string/img_desc"  />
 
     <ImageView
         android:id="@+id/glassImage"
@@ -36,7 +39,8 @@
         android:layout_height="45dp"
         android:layout_below="@+id/paperboardImage"
         android:layout_marginTop="0dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_glass"
+        android:contentDescription="@string/img_desc" />
 
     <ImageView
         android:id="@+id/cansImage"
@@ -44,7 +48,8 @@
         android:layout_height="45dp"
         android:layout_below="@+id/glassImage"
         android:layout_marginTop="0dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_cans"
+        android:contentDescription="@string/img_desc" />
 
     <TextView
         android:id="@+id/bottlesText"
@@ -53,10 +58,10 @@
         android:layout_below="@+id/dateText"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/bottlesImage"
-        android:text="Bottles"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/bottlesImage" />
+        android:layout_toRightOf="@+id/bottlesImage"
+        android:text="@string/Bottles"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tetrabriksText"
@@ -65,10 +70,10 @@
         android:layout_below="@+id/bottlesImage"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/bottlesImage"
-        android:text="Tetrabriks"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/bottlesImage" />
+        android:layout_toRightOf="@+id/bottlesImage"
+        android:text="@string/tetrabriks"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/paperboardText"
@@ -77,10 +82,10 @@
         android:layout_below="@+id/tetrabriksImage"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/bottlesImage"
-        android:text="Paperboard"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/bottlesImage" />
+        android:layout_toRightOf="@+id/bottlesImage"
+        android:text="@string/paperboard"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/glassText"
@@ -89,10 +94,10 @@
         android:layout_below="@+id/paperboardImage"
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/bottlesImage"
-        android:text="Glass"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/bottlesImage" />
+        android:layout_toRightOf="@+id/bottlesImage"
+        android:text="@string/glass"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/cansText"
@@ -101,10 +106,10 @@
         android:layout_below="@+id/glassImage"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/bottlesImage"
-        android:text="Cans"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/bottlesImage" />
+        android:layout_toRightOf="@+id/bottlesImage"
+        android:text="@string/Cans"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/dateText"
@@ -120,7 +125,6 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="82dp"
         android:layout_marginRight="82dp"
-        android:text="TextView"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 </RelativeLayout>

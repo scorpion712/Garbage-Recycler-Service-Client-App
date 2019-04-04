@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:background="@drawable/button"
-        android:text="LogIn" />
+        android:text="@string/LogIn" />
 
     <Button
         android:id="@+id/newButton"
@@ -33,5 +33,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
         android:background="@drawable/button"
-        android:text="Create New" />
+        android:text="@string/register" />
 </RelativeLayout>

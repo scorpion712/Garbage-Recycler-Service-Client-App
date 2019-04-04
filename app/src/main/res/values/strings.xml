@@ -3,4 +3,21 @@
     <string name="EMPTY_FIELDS">Error en los campos</string>
     <string name="helpst">Ayuda</string>
     <string name="logoust">Logout</string>
+    <string name="Cans">Latas:</string>
+    <string name="glass">Vidrio:</string>
+    <string name="paperboard">Cartones:</string>
+    <string name="tetrabriks">Tetrabriks:</string>
+    <string name="Bottles">Botellas:</string>
+    <string name="img_desc">None</string>
+    <string name="register_name">Nombre:</string>
+    <string name="register_surname">Apellido:</string>
+    <string name="register_username">Username:</string>
+    <string name="register_address">Dirección:</string>
+    <string name="register_email">E-Mail:</string>
+    <string name="register">Registrar</string>
+    <string name="recycling_load">Cargar</string>
+    <string name="recycling_send">Enviar</string>
+    <string name="recycling_list">Ver Reciclados</string>
+    <string name="recycling_total">Ver Total</string>
+    <string name="LogIn">Login</string>
 </resources>

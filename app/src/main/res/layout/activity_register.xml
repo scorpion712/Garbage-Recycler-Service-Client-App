@@ -23,7 +23,7 @@
         android:layout_marginStart="27dp"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="86dp"
-        android:text="Nombre:"
+        android:text="@string/register_name"
         android:textStyle="bold"
         android:typeface="sans"
         app:fontFamily="monospace" />
@@ -97,13 +97,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginEnd="155dp"
-        android:layout_marginRight="155dp"
-        android:layout_marginBottom="123dp"
-        android:text="Registrar"
-        android:background="@drawable/button"/>
+        android:layout_marginStart="143dp"
+        android:layout_marginLeft="143dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginRight="143dp"
+        android:layout_marginBottom="128dp"
+        android:background="@drawable/button"
+        android:text="@string/register" />
 
     <EditText
         android:id="@+id/nameText"
