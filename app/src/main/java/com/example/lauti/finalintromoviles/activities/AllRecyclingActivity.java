@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.example.lauti.finalintromoviles.R;
 import com.example.lauti.finalintromoviles.dialogs.AllRecyclingDialog;
+import com.example.lauti.finalintromoviles.model.UserRecycling;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -199,15 +200,15 @@ public class AllRecyclingActivity extends AppCompatActivity {
                         }
                         br.close();
                         JSONObject respJSON = new JSONObject(sb.toString()); // get the JSON Response
-                        entriesValues.add(respJSON.getInt("bottles"));
-                        entriesValues.add(respJSON.getInt("tetrabriks"));
-                        entriesValues.add(respJSON.getInt("paperboard"));
-                        entriesValues.add(respJSON.getInt("glass"));
-                        entriesValues.add(respJSON.getInt("cans"));
+                        entriesValues.add(respJSON.getInt(UserRecycling.BOTTLES));
+                        entriesValues.add(respJSON.getInt(UserRecycling.TETRABRIKS));
+                        entriesValues.add(respJSON.getInt(UserRecycling.PAPERBOARD));
+                        entriesValues.add(respJSON.getInt(UserRecycling.GLASS));
+                        entriesValues.add(respJSON.getInt(UserRecycling.CANS));
 
                         total = respJSON.getDouble("tons");
 
-                        labelsName = new String[]{"bottles", "tetrabriks", "paperboard", "glass", "cans"};
+                        labelsName = new String[]{UserRecycling.BOTTLES, UserRecycling.TETRABRIKS, UserRecycling.PAPERBOARD, UserRecycling.GLASS, UserRecycling.CANS};
                         result = 1;
                     } else {
                         //Toast.makeText(context, "Response error", Toast.LENGTH_SHORT).show();
