@@ -25,15 +25,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
-import com.example.lauti.finalintromoviles.dialogs.RecyclingDialog;
 import com.example.lauti.finalintromoviles.dialogs.RegisterDialog;
 import com.example.lauti.finalintromoviles.model.User;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -52,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
     private User user = new User(); // we use this class to save the data to send on the HTTP Request Body in a JSON
 
     private static final String FIELDS_ERROR = "Error en los campos";
-    private boolean requestOk = false; // this boolean is used to check if the user was registered correctly
 
     private android.support.v7.widget.Toolbar toolbar;
 
@@ -132,7 +128,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
         private static final String REGISTERED_MESSAGE = "Usuario Registrado.";
-        private static final String ERROR_RESPONSE = "Error ";
         private String linkRequestAPI = "users/";
 
         @Override

@@ -19,9 +19,9 @@
         android:id="@+id/loginButton"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/switchLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="34dp"
         android:background="@drawable/button"
         android:text="@string/LogIn" />
 
@@ -31,7 +31,19 @@
         android:layout_height="56dp"
         android:layout_below="@+id/loginButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button"
         android:text="@string/register" />
+
+    <Switch
+        android:id="@+id/switchLogin"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="45dp"
+        android:text="@string/switchLogin"
+        android:layout_marginLeft="112dp" />
 </RelativeLayout>

@@ -20,4 +20,5 @@
     <string name="recycling_list">Ver Reciclados</string>
     <string name="recycling_total">Ver Total</string>
     <string name="LogIn">Login</string>
+    <string name="switchLogin">Recordarme</string>
 </resources>
