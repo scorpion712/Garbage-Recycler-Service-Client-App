@@ -32,6 +32,22 @@ public class User {
         this.firstname = firstname;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
@@ -70,9 +86,9 @@ public class User {
     }
 
     // Build User object into JSON
-    public JSONObject toJSONObject(Context context) {
+    public JSONObject toJSONObject() {
         JSONObject userJSON = new JSONObject();
-
+/*
         UsersDbHelper dbHelper = new UsersDbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -88,7 +104,6 @@ public class User {
                     cursor.getColumnIndexOrThrow(UserContract.UserEntry.ADDRESS));
             String emaildb = cursor.getString(
                     cursor.getColumnIndexOrThrow(UserContract.UserEntry.EMAIL));
-
             try {
                 userJSON.put("firstname", firstnamedb);
                 userJSON.put("lastname", lastnamedb);
@@ -102,6 +117,20 @@ public class User {
             } catch (JSONException e) {
                 Log.e("Error:", e.getMessage());
             }
+        }
+*/
+        try {
+            userJSON.put("firstname", firstname);
+            userJSON.put("lastname", lastname);
+            userJSON.put("username", username);
+            if (!address.equals("")) {
+                userJSON.put("address", address);
+            }
+            if (!email.equals("")) {
+                userJSON.put("email", email);
+            }
+        } catch (JSONException e) {
+            Log.e("Error:", e.getMessage());
         }
 
         return userJSON;

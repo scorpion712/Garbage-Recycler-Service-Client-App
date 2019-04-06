@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,17 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     private Switch switchLogin; // Used to remember the user logged
     private SharedPreferences preferences;
     private String username;
-    private List<String> registeredUsernames = new ArrayList<>();
-
-    // Variable to control the activity response ¿?¿?
-    private static final int REGISTER = 1;
 
     public static final String USERNAME = "usernames"; // Used to save the shared preferences and to pass the username to another activity
+
     // This are use as messages in a Toast
     private static final String SELECT_USER = "Seleccione un usuario o registre uno nuevo";
     private static final String CREATE_NEW_USER = "Debe crear un nuevo usuario para continuar.";
     private static final String NOT_RESPONSE_MESSAGE = "No se ha obtenido respuesta.";
-    private static final String REGISTERED_MESSAGE = "Usuario Registrado.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initComponents();
         // Restore shared preferences
-        preferences = getSharedPreferences(USERNAME, MODE_PRIVATE);
+        preferences = getSharedPreferences(USERNAME, MODE_PRIVATE); // without this line the SharedPreferences aren't loaded
         new LoadPreferencesTask().execute();
     }
 
@@ -86,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameSpin.getSelectedItem().toString();
                     recyclingActivity.putExtra(USERNAME, username);
                     startActivity(recyclingActivity);
-                    finish(); // que hacer cuando cierro sesion?? start loginActivity y finish?
+                    finish();
                 } else {
                     if (usernameSpin.getAdapter().isEmpty()) {
                         Toast.makeText(getApplicationContext(), CREATE_NEW_USER, Toast.LENGTH_SHORT).show();
@@ -101,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivityForResult(intent, REGISTER);
+                startActivityForResult(intent, RESULT_OK);
             }
         });
     }
@@ -111,66 +108,55 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         switch (requestCode) {
-            case REGISTER:  // we receive the new username
-                if (resultCode == RESULT_OK) {  // if the result code is ok
-                    // get the username
-                    Bundle extras = intent.getExtras();
-                    username = (String) extras.get(USERNAME);
-                    saveUsername(username);
-
-                    Intent recyclingActivity = new Intent(getApplicationContext(), RecyclingActivity.class);
-                    recyclingActivity.putExtra(USERNAME, username);
-                    startActivity(recyclingActivity);
-                    finish();
-                } else {
-                    Toast.makeText(this, NOT_RESPONSE_MESSAGE, Toast.LENGTH_LONG).show();
-                }
+            case RESULT_OK:  // we receive the new username
+                // get the username
+                Bundle extras = intent.getExtras();
+                username = (String) extras.get(USERNAME);
+                saveUsername();
+                Intent recyclingActivity = new Intent(getApplicationContext(), RecyclingActivity.class);
+                recyclingActivity.putExtra(USERNAME, username);
+                startActivity(recyclingActivity);
+                finish();
                 break;
             default:
+                Toast.makeText(this, NOT_RESPONSE_MESSAGE, Toast.LENGTH_LONG).show();
                 break;
         }
     }
 
     // save username in SharedPreferences
-    private void saveUsername(String usernamep) {
+    private void saveUsername() {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(USERNAME, usernamep);
+        editor.putString(USERNAME, username);
         //editor.commit();
-        editor.apply(); // guarda asincrónicamente y seguro
+        editor.apply(); // save safely
 
-        loadSpinner(usernamep);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveUsername(username);
+        saveUsername();
     }
 
-    private void loadSpinner(String username) {
-        if (registeredUsernames != null) {
+    private void loadSpinner() {
 
             UsersDbHelper dbHelper = new UsersDbHelper(getApplicationContext());
             //get all users from the DB
             Cursor c = dbHelper.getReadableDatabase().query(UserContract.UserEntry.TABLE_NAME,null,null,null,null,null,null);
-            //because the size of  the spinner changes, we need to create the size of the string dinamically, so, every time
-            //need check the number of  the entries and +3 statically, because set 3 options for default
-            //IF don´t do this, the spinner crash when scroll to the end of the view
-            String [] tospinner= new String[dbHelper.getEntriesCount()+3];
-            //static entries to show in the spinner
-            tospinner[0] = SELECT_USER;
-            tospinner[1] = username;
-            tospinner[2] = "lisams";
-            int pos = 3;
-            while (c.moveToNext()){
-                tospinner[pos] = c.getString(c.getColumnIndex(UserContract.UserEntry.USERNAME));
-                pos++;}
-            c.close();
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, tospinner);
-            //new String[]{SELECT_USER, username, "lisams"});
+            List<String> toSpinner= new ArrayList<>();
+            // Entries to show in the spinner
+            toSpinner.add(SELECT_USER);
+            toSpinner.add(username);
+            toSpinner.add("lisams"); // hardcoded to test
+            while (c.moveToNext()){
+                toSpinner.add(c.getString(c.getColumnIndex(UserContract.UserEntry.USERNAME)));
+            }
+            c.close();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, toSpinner);
+
             usernameSpin.setAdapter(adapter);
-        }
     }
 
     private class LoadPreferencesTask extends AsyncTask<URL, Integer, Long> {
@@ -179,8 +165,9 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             //get sharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences(USERNAME, getApplicationContext().MODE_PRIVATE);
-            loadSpinner(sharedPreferences.getString(USERNAME, "")); // if there is no shared preferences
+            preferences = getSharedPreferences(USERNAME, getApplicationContext().MODE_PRIVATE);
+            username = preferences.getString(USERNAME, "");
+            loadSpinner(); // if there is no shared preferences
         }
 
         @Override
