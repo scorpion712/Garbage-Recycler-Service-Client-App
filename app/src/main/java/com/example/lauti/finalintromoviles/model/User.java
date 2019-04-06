@@ -1,6 +1,11 @@
 package com.example.lauti.finalintromoviles.model;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.example.lauti.finalintromoviles.database.UsersDbHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,21 +70,40 @@ public class User {
     }
 
     // Build User object into JSON
-    public JSONObject toJSONObject() {
+    public JSONObject toJSONObject(Context context) {
         JSONObject userJSON = new JSONObject();
-        try {
-            userJSON.put("firstname", firstname);
-            userJSON.put("lastname", lastname);
-            userJSON.put("username", username);
-            if (!address.equals("")) {
-                userJSON.put("address", address);
+
+        UsersDbHelper dbHelper = new UsersDbHelper(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT FIRSTNAME,LASTNAME,USERNAME,ADDRESS,EMAIL FROM users",null);
+        while(cursor.moveToNext()) {
+            String firstnamedb = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserContract.UserEntry.FIRSTNAME));
+            String lastnamedb = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserContract.UserEntry.LASTNAME));
+            String usernamedb = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserContract.UserEntry.USERNAME));
+            String addressdb = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserContract.UserEntry.ADDRESS));
+            String emaildb = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserContract.UserEntry.EMAIL));
+
+            try {
+                userJSON.put("firstname", firstnamedb);
+                userJSON.put("lastname", lastnamedb);
+                userJSON.put("username", usernamedb);
+                if (!address.equals("")) {
+                    userJSON.put("address", addressdb);
+                }
+                if (!email.equals("")) {
+                    userJSON.put("email", emaildb);
+                }
+            } catch (JSONException e) {
+                Log.e("Error:", e.getMessage());
             }
-            if (!email.equals("")) {
-                userJSON.put("email", email);
-            }
-        } catch (JSONException e) {
-            Log.e("Error:", e.getMessage());
         }
+
         return userJSON;
 
     }

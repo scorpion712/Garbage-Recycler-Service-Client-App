@@ -8,8 +8,10 @@ package com.example.lauti.finalintromoviles.activities;
  */
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -25,8 +27,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
+import com.example.lauti.finalintromoviles.database.UsersDbHelper;
 import com.example.lauti.finalintromoviles.dialogs.RegisterDialog;
 import com.example.lauti.finalintromoviles.model.User;
+import com.example.lauti.finalintromoviles.model.UserContract;
 
 import org.json.JSONObject;
 
@@ -45,12 +49,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText address;
     private EditText email;
 
-
     private User user = new User(); // we use this class to save the data to send on the HTTP Request Body in a JSON
 
     private static final String FIELDS_ERROR = "Error en los campos";
 
     private android.support.v7.widget.Toolbar toolbar;
+    private UsersDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // adding the customized toolbar
-
 
         initComponents();
     }
@@ -116,6 +119,20 @@ public class RegisterActivity extends AppCompatActivity {
         user.setUsername(username.getText().toString());
         user.setAddress(address.getText().toString());
         user.setEmail(email.getText().toString());
+
+        // Gets the data repository in write mode
+        dbHelper = new UsersDbHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(UserContract.UserEntry.FIRSTNAME, firstName.getText().toString());
+        values.put(UserContract.UserEntry.LASTNAME, lastName.getText().toString());
+        values.put(UserContract.UserEntry.USERNAME, username.getText().toString());
+        values.put(UserContract.UserEntry.ADDRESS, address.getText().toString());
+        values.put(UserContract.UserEntry.EMAIL, email.getText().toString());
+
+        db.insert(UserContract.UserEntry.TABLE_NAME, null, values);
     }
 
     @Override
@@ -128,6 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
         private static final String REGISTERED_MESSAGE = "Usuario Registrado.";
+        private static final String ERROR_RESPONSE = "Error ";
         private String linkRequestAPI = "users/";
 
         @Override
@@ -159,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                     url = new URL(API_LOCALITATION + linkRequestAPI); // WS URL
                     HttpURLConnection myConnection = (HttpURLConnection) url.openConnection();
 
-                    JSONObject postJSON = new JSONObject(user.toJSONObject().toString()); // JSON Object to send on POST
+                    JSONObject postJSON = new JSONObject(user.toJSONObject(getApplicationContext()).toString()); // JSON Object to send on POST
 
                     // Connection Parameters
                     myConnection.setReadTimeout(15000 /* milliseconds */);
@@ -191,4 +209,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        dbHelper = new UsersDbHelper(getApplicationContext());
+        dbHelper.close();
+        super.onDestroy();
+    }
 }
