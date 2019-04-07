@@ -27,10 +27,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lauti.finalintromoviles.R;
-import com.example.lauti.finalintromoviles.database.UsersDbHelper;
 import com.example.lauti.finalintromoviles.dialogs.RegisterDialog;
 import com.example.lauti.finalintromoviles.model.User;
-import com.example.lauti.finalintromoviles.model.UserContract;
 
 import org.json.JSONObject;
 
@@ -120,21 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
         user.setUsername(username.getText().toString());
         user.setAddress(address.getText().toString());
         user.setEmail(email.getText().toString());
-
-        // Gets the data repository in write mode
-        UsersDbHelper dbHelper = new UsersDbHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(UserContract.UserEntry.FIRSTNAME, user.getFirstname());
-        values.put(UserContract.UserEntry.LASTNAME, user.getLastname());
-        values.put(UserContract.UserEntry.USERNAME, user.getUsername());
-        values.put(UserContract.UserEntry.ADDRESS, user.getAddress());
-        values.put(UserContract.UserEntry.EMAIL, user.getEmail());
-
-        // Insert User's data into the DB
-        db.insert(UserContract.UserEntry.TABLE_NAME, null, values);
     }
 
     @Override

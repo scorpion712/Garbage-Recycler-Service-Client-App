@@ -8,6 +8,7 @@ package com.example.lauti.finalintromoviles.activities;
  * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -99,8 +100,8 @@ public class RecyclingActivity extends AppCompatActivity {
                 break;
             case R.id.logout:
                 // Do the logout. Return to login activity
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(login);
+                Intent returnLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                setResult(Activity.RESULT_OK, returnLogin);
                 finish();
                 break;
         }

@@ -1,11 +1,6 @@
 package com.example.lauti.finalintromoviles.model;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import com.example.lauti.finalintromoviles.database.UsersDbHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,28 +27,8 @@ public class User {
         this.firstname = firstname;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {
