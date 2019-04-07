@@ -10,6 +10,7 @@ package com.example.lauti.finalintromoviles.activities;
  *
  */
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -48,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String SELECT_USER = "Seleccione un usuario o registre uno nuevo";
     private static final String CREATE_NEW_USER = "Debe crear un nuevo usuario para continuar.";
     private static final String NOT_RESPONSE_MESSAGE = "No se ha obtenido respuesta.";
+
+    private static final int REGISTER_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivityForResult(intent, RESULT_OK);
+                startActivityForResult(intent, REGISTER_REQUEST_CODE);
             }
         });
     }
@@ -108,21 +111,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         switch (requestCode) {
-            case RESULT_OK:  // we receive the new username
-                // get the username
-                Bundle extras = intent.getExtras();
-                username = (String) extras.get(USERNAME);
-                saveUsername();
-                Intent recyclingActivity = new Intent(getApplicationContext(), RecyclingActivity.class);
-                recyclingActivity.putExtra(USERNAME, username);
-                startActivity(recyclingActivity);
-                finish();
+            case REGISTER_REQUEST_CODE:  // we receive the new username
+                if (resultCode == Activity.RESULT_OK) {  // if the result code is ok
+                    // get the username
+                    Bundle extras = intent.getExtras();
+                    username = (String) extras.get(USERNAME);
+                    saveUsername();
+                    Intent recyclingActivity = new Intent(getApplicationContext(), RecyclingActivity.class);
+                    recyclingActivity.putExtra(USERNAME, username);
+                    startActivity(recyclingActivity);
+                    finish();
+                } else {
+                    Toast.makeText(this, NOT_RESPONSE_MESSAGE, Toast.LENGTH_LONG).show();
+                }
                 break;
-            default:
-                Toast.makeText(this, NOT_RESPONSE_MESSAGE, Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
+                default:
+                    break;
+    }}
 
     // save username in SharedPreferences
     private void saveUsername() {
@@ -148,8 +153,6 @@ public class LoginActivity extends AppCompatActivity {
             List<String> toSpinner= new ArrayList<>();
             // Entries to show in the spinner
             toSpinner.add(SELECT_USER);
-            toSpinner.add(username);
-            toSpinner.add("lisams"); // hardcoded to test
             while (c.moveToNext()){
                 toSpinner.add(c.getString(c.getColumnIndex(UserContract.UserEntry.USERNAME)));
             }
