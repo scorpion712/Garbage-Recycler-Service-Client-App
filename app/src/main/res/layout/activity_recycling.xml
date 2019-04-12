@@ -23,7 +23,10 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="59dp"
         android:text="@string/Bottles"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:fontFamily="monospace" />
 
     <EditText
         android:id="@+id/bottlesText"
@@ -105,8 +108,15 @@
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toStartOf="@+id/tetrabriksText"
+        android:layout_toLeftOf="@+id/tetrabriksText"
         android:text="@string/tetrabriks"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:fontFamily="monospace" />
 
     <TextView
         android:id="@+id/textView13"
@@ -118,8 +128,15 @@
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_toStartOf="@+id/glassText"
+        android:layout_toLeftOf="@+id/glassText"
         android:text="@string/glass"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:fontFamily="monospace" />
 
     <TextView
         android:id="@+id/textView14"
@@ -131,8 +148,15 @@
         android:layout_marginStart="3dp"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toStartOf="@+id/paperboardText"
+        android:layout_toLeftOf="@+id/paperboardText"
         android:text="@string/paperboard"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:fontFamily="monospace" />
 
     <TextView
         android:id="@+id/textView15"
@@ -144,23 +168,30 @@
         android:layout_marginStart="3dp"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_toStartOf="@+id/cansText"
+        android:layout_toLeftOf="@+id/cansText"
         android:text="@string/Cans"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:typeface="sans"
+        app:fontFamily="monospace"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/sendButton"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="139dp"
-        android:layout_marginLeft="139dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginRight="157dp"
-        android:layout_marginBottom="182dp"
+        android:layout_marginStart="134dp"
+        android:layout_marginLeft="134dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="9dp"
         android:background="@drawable/button"
         android:text="@string/recycling_load" />
 
@@ -168,25 +199,33 @@
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/loadButton"
-        android:layout_alignLeft="@+id/loadButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="130dp"
+        android:layout_above="@+id/recyclingListButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="135dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginRight="161dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/button"
         android:text="@string/recycling_send" />
 
     <Button
         android:id="@+id/recyclingListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/loadButton"
-        android:layout_alignRight="@+id/loadButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-8dp"
-        android:layout_marginRight="-8dp"
-        android:layout_marginBottom="78dp"
+        android:layout_width="149dp"
+        android:layout_height="53dp"
+        android:layout_above="@+id/totalButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginRight="131dp"
+        android:layout_marginBottom="6dp"
         android:background="@drawable/button"
         android:text="@string/recycling_list" />
 
@@ -196,10 +235,14 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/loadButton"
         android:layout_alignLeft="@+id/loadButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-3dp"
-        android:layout_marginLeft="-3dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginRight="159dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/button"
         android:text="@string/recycling_total" />
 
