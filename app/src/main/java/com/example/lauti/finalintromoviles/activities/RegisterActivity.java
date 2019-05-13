@@ -8,10 +8,8 @@ package com.example.lauti.finalintromoviles.activities;
  */
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -38,6 +36,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.example.lauti.finalintromoviles.activities.LoginActivity.USERNAME;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private Button registerButton;
@@ -46,6 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText username;
     private EditText address;
     private EditText email;
+
+    // Static vars used to save state when rotate screen
+    private static final String FIRST_NAME = "firstname";
+    private static final String LAST_NAME = "lastname";
+    private static final String ADDRESS = "address";
+    private static final String EMAIL = "email";
 
 
     private User user = new User(); // we use this class to save the data to send on the HTTP Request Body in a JSON
@@ -126,9 +132,30 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(FIRST_NAME, firstName.getText().toString());
+        outState.putString(LAST_NAME, lastName.getText().toString());
+        outState.putString(USERNAME, username.getText().toString());
+        outState.putString(ADDRESS, address.getText().toString());
+        outState.putString(EMAIL, email.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        firstName.setText(savedInstanceState.getString(FIRST_NAME));
+        lastName.setText(savedInstanceState.getString(LAST_NAME));
+        username.setText(savedInstanceState.getString(USERNAME));
+        address.setText(savedInstanceState.getString(ADDRESS));
+        email.setText(savedInstanceState.getString(EMAIL));
+    }
+
     private class RegisterUserWS extends AsyncTask<Void, Void, String> {
 
-        private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
+        // Use 10.0.0.2 to test connect with the virtual device. Use your local IP to test with a physical device on the same network
+        private static final String API_LOCALITATION = "http://10.0.0.2:8080/api/";
         private static final String REGISTERED_MESSAGE = "Usuario Registrado.";
         private String linkRequestAPI = "users/";
 
@@ -138,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
             // We need to save shared preferences (if the WS was correctly consumed), so we don't start RecyclingActivity.
             // We go back to Login, save the shared preferences and start the Recycling Activity
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(LoginActivity.USERNAME, username.getText().toString());
+            returnIntent.putExtra(USERNAME, username.getText().toString());
             if (result.equals(REGISTERED_MESSAGE)) { //  if we registered the user return to login and first show a message saying User is registered successfully
                 setResult(Activity.RESULT_OK, returnIntent);
                 Toast.makeText(getApplicationContext(), REGISTERED_MESSAGE, Toast.LENGTH_LONG).show();

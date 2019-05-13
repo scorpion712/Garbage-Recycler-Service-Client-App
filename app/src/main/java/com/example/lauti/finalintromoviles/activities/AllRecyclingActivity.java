@@ -160,7 +160,9 @@ public class AllRecyclingActivity extends AppCompatActivity {
          * because we try it on the emulator.
          * Note: not working on the device.
          */
-        private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
+
+        // Use 10.0.0.2 to test connect with the virtual device. Use your local IP to test with a physical device on the same network
+        private static final String API_LOCALITATION = "http://10.0.0.2:8080/api/";
         private String webServiceAction = "recycling/";
 
 

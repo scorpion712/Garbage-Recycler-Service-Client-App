@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background1"
     tools:context=".activities.AllRecyclingActivity">
 
     <include
         layout="@layout/toolbar"
-        android:visibility="visible"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:visibility="visible" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/graph"
         android:layout_width="match_parent"
         android:layout_height="378dp"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"></com.github.mikephil.charting.charts.PieChart>
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"></com.github.mikephil.charting.charts.PieChart>
 
 </RelativeLayout>

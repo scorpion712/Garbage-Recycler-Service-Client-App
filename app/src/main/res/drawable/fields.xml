@@ -3,13 +3,13 @@
     <!-- to see color: https://htmlcolorcodes.com/es/ -->
     <solid android:color="@color/backColor"/>
 
-    <stroke android:width="3dp"
-        android:color="@color/borderColor"/>
 
     <padding android:left="1dp"
         android:top="1dp"
         android:right="1dp"
         android:bottom="1dp"/>
 
-    <corners android:radius="30px"/>
+    <corners android:radius="200px"
+        />
+
 </shape>

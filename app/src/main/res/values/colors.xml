@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryDark">#0c685e</color>
+    <color name="colorAccent">#e71ed3</color>
     <color name="spinnerBackground">#727272</color>
+    <color name="backColor">#4fae01de</color>
+    <color name="fontColor">#00eeff</color>
+    <color name="borderColor">#a8fd17ea</color>
 </resources>

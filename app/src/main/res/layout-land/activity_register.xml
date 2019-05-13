@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background1"
-    android:orientation="vertical"
-    tools:context=".activities.RecyclingListActivity">
+    android:layout_height="match_parent">
 
     <include
+        android:id="@+id/include2"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />
 
-
-    <ListView
-        android:id="@+id/listView"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.lauti.finalintromoviles.fragments.RegisterFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="5dp" />
-</LinearLayout>
+        android:layout_below="@+id/include2"
+        android:layout_marginTop="0dp" />
+
+
+</RelativeLayout>

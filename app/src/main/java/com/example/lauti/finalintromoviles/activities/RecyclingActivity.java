@@ -50,10 +50,11 @@ public class RecyclingActivity extends AppCompatActivity {
 
     private String username;
     private UserRecycling userRecycling = null; // this is used to send a JSON in a HTTP Request Body
-    private static final String API_LOCALITATION = "http://10.0.2.2:8080/api/";
+    // Use 10.0.0.2 to test connect with the virtual device. Use your local IP to test with a physical device on the same network
+    private static final String API_LOCALITATION = "http://10.0.0.2:8080/api/";
     private static final String RECYCLING_LOAD_MESSAGE = "Reciclado cargado.";
     private static final String DATE_FORMAT = "dd-MM-yyyy";
-    private static final String FILENAME = "User_Recycling_Saved.txt";
+    private static final String FILENAME = "user_recycling_file";
     private static final String SAVE_FILE_ERROR_MESSAGE = "Error al guardar el archivo";
     private static final String LOAD_FILE_ERROR_MESSAGE = "Error al cargar el archivo";
     private static final String FIELD_ERROR_MESSAGE = "Error en los campos";
@@ -197,7 +198,7 @@ public class RecyclingActivity extends AppCompatActivity {
             osw.write(userRecycling.toJSONObject().toString());
             osw.close();
         } catch (Exception e) {
-            Log.e("Error", e.getMessage());
+            Log.e("Save Error", e.getMessage());
             Toast.makeText(getApplicationContext(), SAVE_FILE_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
@@ -272,6 +273,26 @@ public class RecyclingActivity extends AppCompatActivity {
         cans.setText("0");
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(UserRecycling.BOTTLES, bottles.getText().toString());
+        outState.putString(UserRecycling.TETRABRIKS, tetrabriks.getText().toString());
+        outState.putString(UserRecycling.PAPERBOARD, paperboard.getText().toString());
+        outState.putString(UserRecycling.GLASS, glass.getText().toString());
+        outState.putString(UserRecycling.CANS, cans.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        bottles.setText(savedInstanceState.getString(UserRecycling.BOTTLES));
+        tetrabriks.setText(savedInstanceState.getString(UserRecycling.TETRABRIKS));
+        paperboard.setText(savedInstanceState.getString(UserRecycling.PAPERBOARD));
+        glass.setText(savedInstanceState.getString(UserRecycling.GLASS));
+        cans.setText(savedInstanceState.getString(UserRecycling.CANS));
+    }
 
     /**
      * This AsyncTask can be used to send data to the service or save data locally.

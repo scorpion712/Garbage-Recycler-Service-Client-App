@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_background"
     tools:context=".activities.LoginActivity">
 
     <Spinner
@@ -13,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
-        android:background="@color/spinnerBackground" />
+        android:background="@color/backColor" />
 
     <Button
         android:id="@+id/loginButton"
@@ -23,7 +24,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
         android:background="@drawable/button"
-        android:text="@string/LogIn" />
+        android:text="@string/LogIn"
+        android:textColor="@color/fontColor" />
 
     <Button
         android:id="@+id/newButton"
@@ -33,7 +35,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@drawable/button"
-        android:text="@string/register" />
+        android:text="@string/register"
+        android:textColor="@color/fontColor" />
 
     <Switch
         android:id="@+id/switchLogin"
@@ -42,8 +45,14 @@
         android:layout_below="@+id/spinner"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="112dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="99dp"
+        android:layout_marginLeft="99dp"
         android:layout_marginTop="45dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginRight="103dp"
+        android:background="@color/backColor"
         android:text="@string/switchLogin"
-        android:layout_marginLeft="112dp" />
+        android:textColor="@color/fontColor" />
 </RelativeLayout>
