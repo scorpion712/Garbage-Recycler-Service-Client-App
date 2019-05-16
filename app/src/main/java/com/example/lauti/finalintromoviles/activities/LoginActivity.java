@@ -5,7 +5,7 @@ package com.example.lauti.finalintromoviles.activities;
  * @author: Diez, Lautaro
  * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
  * To find the project:
- * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
  */
 
 import android.app.Activity;

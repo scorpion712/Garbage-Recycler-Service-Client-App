@@ -2,28 +2,280 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycling_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RecyclingActivity">
+    android:background="@drawable/background1">
+
 
     <include
         layout="@layout/toolbar"
-        android:visibility="visible"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-
-
-    <fragment
-        android:id="@+id/fragment3"
-        android:name="com.example.lauti.finalintromoviles.fragments.RecyclingFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="141dp"
+        android:layout_height="39dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="73dp"
+        android:background="@drawable/fields"
+        android:text="@string/Bottles"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/bottlesText"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/textView11"
+        android:layout_toRightOf="@+id/textView11"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/tetrabriksText"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/bottlesText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_toEndOf="@+id/textView12"
+        android:layout_toRightOf="@+id/textView12"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/glassText"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/tetrabriksText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/textView13"
+        android:layout_toRightOf="@+id/textView13"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/paperboardText"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/glassText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/textView14"
+        android:layout_toRightOf="@+id/textView14"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/cansText"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/paperboardText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@+id/textView15"
+        android:layout_toRightOf="@+id/textView15"
+        android:background="@drawable/fields"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="141dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/bottlesText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/fields"
+        android:text="@string/tetrabriks"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="141dp"
+        android:layout_height="39dp"
+        android:layout_alignTop="@+id/glassText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/fields"
+        android:text="@string/glass"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="141dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/glassText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/fields"
+        android:text="@string/paperboard"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="141dp"
+        android:layout_height="39dp"
+        android:layout_alignTop="@+id/cansText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/fields"
+        android:text="@string/Cans"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/loadButton"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_above="@+id/sendButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="94dp"
+        android:layout_marginLeft="94dp"
+        android:layout_marginEnd="91dp"
+        android:layout_marginRight="91dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/button"
+        android:text="@string/recycling_load"
+        android:textColor="@color/fontColor" />
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_above="@+id/recyclingListButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginEnd="90dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/button"
+        android:text="@string/recycling_send"
+        android:textColor="@color/fontColor" />
+
+    <Button
+        android:id="@+id/recyclingListButton"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_above="@+id/totalButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="94dp"
+        android:layout_marginLeft="94dp"
+        android:layout_marginEnd="91dp"
+        android:layout_marginRight="91dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/button"
+        android:text="@string/recycling_list"
+        android:textColor="@color/fontColor" />
+
+    <Button
+        android:id="@+id/totalButton"
+        android:layout_width="175dp"
+        android:layout_height="39dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="93dp"
+        android:layout_marginLeft="93dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginRight="92dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/button"
+        android:text="@string/recycling_total"
+        android:textColor="@color/fontColor" />
 
 
 </RelativeLayout>

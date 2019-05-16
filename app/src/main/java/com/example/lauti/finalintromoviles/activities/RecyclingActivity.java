@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -117,14 +118,19 @@ public class RecyclingActivity extends AppCompatActivity {
         // Mapping Edit Texts
         bottles = (EditText) findViewById(R.id.bottlesText);
         bottles.setText("0");
+        bottles.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI); // Disable "fullscreen" on edit text landscape
         tetrabriks = (EditText) findViewById(R.id.tetrabriksText);
         tetrabriks.setText("0");
+        tetrabriks.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         paperboard = (EditText) findViewById(R.id.paperboardText);
         paperboard.setText("0");
+        paperboard.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         glass = (EditText) findViewById(R.id.glassText);
         glass.setText("0");
+        glass.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         cans = (EditText) findViewById(R.id.cansText);
         cans.setText("0");
+        cans.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 
         // Mapping buttons and setting listeners
         loadButton = (Button) findViewById(R.id.loadButton);

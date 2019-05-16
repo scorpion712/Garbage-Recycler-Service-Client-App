@@ -1,5 +1,12 @@
 package com.example.lauti.finalintromoviles.controller;
 
+/**
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
+ * To find the project:
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ */
 import android.content.Context;
 import android.media.Image;
 import android.util.Log;

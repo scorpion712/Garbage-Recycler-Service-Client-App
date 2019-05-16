@@ -4,7 +4,7 @@ package com.example.lauti.finalintromoviles.activities;
  * @author: Diez, Lautaro
  * @Note: we use the Web Service did as the final practical work for the subject Service Oriented Architecture.
  * To find the project:
- * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
  */
 
 import android.app.Activity;
@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -97,10 +98,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initComponents() {
         firstName = (EditText) findViewById(R.id.nameText);
+        firstName.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);    // Disable full screen editing on landscape
         lastName = (EditText) findViewById(R.id.lastNameText);
+        lastName.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         username = (EditText) findViewById(R.id.usernameText);
+        username.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         address = (EditText) findViewById(R.id.addressText);
+        address.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         email = (EditText) findViewById(R.id.emailText);
+        email.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 
         registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {

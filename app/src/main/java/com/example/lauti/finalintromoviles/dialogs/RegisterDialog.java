@@ -1,4 +1,11 @@
 package com.example.lauti.finalintromoviles.dialogs;
+/**
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ * @Note: we use the Web Service did as the final practical work for the subject Service Oriented Architecture.
+ * To find the project:
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ */
 
 import android.app.AlertDialog;
 import android.app.Dialog;

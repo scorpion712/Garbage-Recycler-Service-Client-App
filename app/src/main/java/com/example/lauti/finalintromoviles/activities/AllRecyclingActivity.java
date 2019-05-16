@@ -1,5 +1,13 @@
 package com.example.lauti.finalintromoviles.activities;
 
+/**
+ * @author: Oneto, Fernando
+ * @author: Diez, Lautaro
+ * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
+ * To find the project:
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +24,11 @@ import android.view.MenuItem;
 import com.example.lauti.finalintromoviles.R;
 import com.example.lauti.finalintromoviles.dialogs.AllRecyclingDialog;
 import com.example.lauti.finalintromoviles.model.UserRecycling;
+/**
+ * To show charts we used the library MPAndroidChary created by Philipp Jahoda.
+ * You cant visit
+ * @Link:https://github.com/PhilJay/MPAndroidChart to more information.
+ */
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -154,12 +167,6 @@ public class AllRecyclingActivity extends AppCompatActivity {
     private class GetRecyclingWebService extends AsyncTask<URL, Integer, Long> {
 
         private final static String ERROR_RESPONSE = "Error response";
-
-        /**
-         * webServiceAction is the URL where is the service, we use 10.0.2.2 and not localhost
-         * because we try it on the emulator.
-         * Note: not working on the device.
-         */
 
         // Use 10.0.0.2 to test connect with the virtual device. Use your local IP to test with a physical device on the same network
         private static final String API_LOCALITATION = "http://10.0.0.2:8080/api/";

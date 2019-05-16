@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatDialogFragment;
  * @author: Diez, Lautaro
  * @Note: we use the Web Service did as the final practical work for the subject Service Oriented.
  * To find the project:
- * @link: https://github.com/scorpion712/Rest-Service-Garbage-Recycler
+ * @link:https://github.com/scorpion712/Rest-Service-Garbage-Recycler
  */
 
 // Class created to show a help dialog on RecyclingActivity
